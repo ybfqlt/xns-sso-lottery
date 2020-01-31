@@ -1,0 +1,13 @@
+.idea/
+xns-sso.iml
+xns-sso-server.iml
+xns-sso-api.iml
+ha/
+target/
+README.MD
+xns-service-redis.iml
+xns-service-eureka.iml
+xns-service-redis/
+xns-service-eureka/
+xns-sso-api/
+xns-sso-server/
