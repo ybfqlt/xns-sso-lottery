@@ -27,10 +27,18 @@ public class Result<T> implements Serializable {
     public Result(int code, String mes) {
         this.code = code;
         this.mes = mes;
+        this.data = null;
     }
 
     public Result(T data) {
         this.code = SUCCESS_CODE;
+        this.mes = "ok";
         this.data = data;
+    }
+
+    public Result(String mes){
+        this.code = SUCCESS_CODE;
+        this.mes = mes;
+        this.data = null;
     }
 }

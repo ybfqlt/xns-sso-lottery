@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @Date: 20-1-31 下午5:33
  */
 @RestController
+@RequestMapping("/redis")
 public class RedisController {
 
     @Autowired
