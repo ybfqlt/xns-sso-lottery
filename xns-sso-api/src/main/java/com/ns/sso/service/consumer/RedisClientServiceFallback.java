@@ -1,0 +1,41 @@
+package com.ns.sso.service.consumer;
+
+import com.google.common.collect.Lists;
+import com.ns.sso.dto.Result;
+import com.ns.sso.utils.JsonUtils;
+import feign.hystrix.FallbackFactory;
+import org.springframework.stereotype.Component;
+
+/**
+ * @Author: xns
+ * @Date: 20-2-1 下午10:02
+ */
+@Component
+public class RedisClientServiceFallback implements FallbackFactory<RedisClientService> {
+    @Override
+    public RedisClientService create(Throwable throwable) {
+        return new RedisClientService() {
+            @Override
+            public String put(String key, String value, long seconds) {
+               Result result = Result.no("该key:"+key+"put失败");
+               try{
+                   return JsonUtils.obj2json(result);
+               }catch (Exception e){
+                   e.printStackTrace();
+               }
+               return null;
+            }
+
+            @Override
+            public String get(String key) {
+                Result result = Result.no("该key:"+key+"没有对应的value,即不存在");
+                try{
+                    return JsonUtils.obj2json(result);
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+                return null;
+            }
+        };
+    }
+}

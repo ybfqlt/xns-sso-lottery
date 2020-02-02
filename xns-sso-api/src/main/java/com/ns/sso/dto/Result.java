@@ -41,4 +41,9 @@ public class Result<T> implements Serializable {
         this.mes = mes;
         this.data = null;
     }
+
+    public static Result no(String mes){
+        return new Result().setCode(500).setData(null).setMes(mes);
+    }
+
 }
