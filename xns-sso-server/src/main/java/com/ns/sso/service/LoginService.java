@@ -8,4 +8,6 @@ import com.ns.sso.entities.User;
  */
 public interface LoginService {
     void register(User user);
+
+    User login(User user) throws Exception;
 }

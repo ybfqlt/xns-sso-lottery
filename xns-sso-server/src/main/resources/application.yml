@@ -1,13 +1,13 @@
 server:
-  port: 8012
+  port: 8001
 
 #mybatis的整合
 mybatis:
   config-location: classpath:mybatis/mybatis.cfg.xml
   type-aliases-package: com.ns.sso.entities
   mapper-locations: classpath:mybatis/mapper/*.xml
-  configuration:
-    map-underscore-to-camel-case: true
+#  configuration:
+#    map-underscore-to-camel-case: true
 
 
 #spring的整合
@@ -34,6 +34,17 @@ spring:
     servlet:
       content-type: text/html
 
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:7001/eureka
+  instance:
+    instance-id: service-sso8001
+    prefer-ip-address: true
+
+feign:
+  hystrix:
+    enabled: true
 
 info:
   app.name: xns-sso

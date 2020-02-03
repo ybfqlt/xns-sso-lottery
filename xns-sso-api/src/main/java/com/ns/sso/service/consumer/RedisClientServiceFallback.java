@@ -1,6 +1,5 @@
 package com.ns.sso.service.consumer;
 
-import com.google.common.collect.Lists;
 import com.ns.sso.dto.Result;
 import com.ns.sso.utils.JsonUtils;
 import feign.hystrix.FallbackFactory;
@@ -17,9 +16,9 @@ public class RedisClientServiceFallback implements FallbackFactory<RedisClientSe
         return new RedisClientService() {
             @Override
             public String put(String key, String value, long seconds) {
-               Result result = Result.no("该key:"+key+"put失败");
+               Result result = new Result().no("该key:"+key+"put失败");
                try{
-                   return JsonUtils.obj2json(result);
+                   return JsonUtils.objToJson(result);
                }catch (Exception e){
                    e.printStackTrace();
                }
@@ -28,9 +27,9 @@ public class RedisClientServiceFallback implements FallbackFactory<RedisClientSe
 
             @Override
             public String get(String key) {
-                Result result = Result.no("该key:"+key+"没有对应的value,即不存在");
+                Result result = new Result().no("该key:"+key+"没有对应的value,即不存在");
                 try{
-                    return JsonUtils.obj2json(result);
+                    return JsonUtils.objToJson(result);
                 }catch (Exception e){
                     e.printStackTrace();
                 }

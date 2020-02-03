@@ -13,7 +13,7 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
  */
 @EnableEurekaClient //服务提供者
 @EnableDiscoveryClient //服务消费者
-@EnableFeignClients
+@EnableFeignClients(basePackages = {"com.ns.sso"})
 @SpringBootApplication
 @MapperScan(basePackages = "com.ns.sso.mapper")
 public class ServiceSSOAPP {

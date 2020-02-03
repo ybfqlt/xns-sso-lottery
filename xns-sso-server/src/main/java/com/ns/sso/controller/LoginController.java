@@ -3,12 +3,12 @@ package com.ns.sso.controller;
 import com.ns.sso.dto.Result;
 import com.ns.sso.entities.User;
 import com.ns.sso.service.LoginService;
+import com.ns.sso.utils.JsonUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * @Author: xns
@@ -27,13 +27,35 @@ public class LoginController {
      * @return
      */
     @PostMapping("/register")
-    public Result register(@Validated User user, BindingResult bindingResult){
+    public Result register(@Validated @RequestBody User user,BindingResult bindingResult) throws Exception {
         if(bindingResult.hasErrors()){
-            return new Result("格式错误");
+            String s = JsonUtils.objToJson(bindingResult.getAllErrors());
+            return new Result(s);
         }
         if(user != null){
             loginService.register(user);
         }
         return new Result<Object>(null);
+    }
+
+    /**
+     * 登录
+     * @param user
+     * @param bindingResult
+     * @return
+     * @throws Exception
+     */
+    @PostMapping("/login")
+    public Result login(@Validated @RequestBody User user,BindingResult bindingResult) throws Exception {
+        if(bindingResult.hasErrors()){
+            String s = JsonUtils.objToJson(bindingResult.getAllErrors());
+            return new Result(s);
+        }
+        User login = loginService.login(user);
+        if(login == null){
+            return new Result().no("密码错误/不存在此用户");
+        }else{
+            return new Result("登陆成功");
+        }
     }
 }

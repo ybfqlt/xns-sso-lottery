@@ -3,6 +3,7 @@ package com.ns.sso.service.consumer;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 /**
  * @Author: xns
@@ -12,8 +13,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 public interface RedisClientService {
 
     @PostMapping("/redis/put")
-    public String put(String key,String value,long seconds);
+    public String put(@RequestParam String key,@RequestParam String value,@RequestParam long seconds);
 
     @GetMapping("/redis/get")
-    public String get(String key);
+    public String get(@RequestParam String key);
 }

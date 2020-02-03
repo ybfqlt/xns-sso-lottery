@@ -1,6 +1,7 @@
 package com.ns.sso.dto;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 
 import java.io.Serializable;
@@ -10,6 +11,7 @@ import java.io.Serializable;
  * @Date: 20-1-28 下午10:07
  */
 @Data
+@NoArgsConstructor
 @Accessors(chain=true)
 public class Result<T> implements Serializable {
     public static final long serialVersionUID = 42L;
@@ -42,7 +44,7 @@ public class Result<T> implements Serializable {
         this.data = null;
     }
 
-    public static Result no(String mes){
+    public Result no(String mes){
         return new Result().setCode(500).setData(null).setMes(mes);
     }
 

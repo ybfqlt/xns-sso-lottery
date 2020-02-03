@@ -1,6 +1,20 @@
 server:
   port: 8301
 
+spring:
+  application:
+    name: servicecloud-redis
+  redis:
+    #密码
+    lettuce:
+      pool:
+        max-active: 8
+        max-idle: 8
+        max-wait: -1ms
+        min-idle: 0
+    password: tian787604
+    port: 6379
+
 eureka:
   client:
     service-url:
@@ -20,15 +34,3 @@ info:
   company.name: www.xns.com
   build.artifactId: $project.artifactId$
   build.version: $project.version$
-
-spring:
-  application:
-    name: servicecloud-redis
-  redis:
-    #密码
-    lettuce:
-      pool:
-        max-active: 8
-        max-idle: 8
-        max-wait: -1ms
-        min-idle: 0

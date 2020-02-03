@@ -34,7 +34,7 @@ public class JsonUtils {
      * @return
      * @throws Exception
      */
-    public static String obj2json(Object obj) throws Exception {
+    public static String objToJson(Object obj) throws Exception {
         return objectMapper.writeValueAsString(obj);
     }
 
@@ -45,7 +45,7 @@ public class JsonUtils {
      * @return
      * @throws Exception
      */
-    public static String obj2jsonIgnoreNull(Object obj) throws Exception {
+    public static String objToJsonIgnoreNull(Object obj) throws Exception {
         ObjectMapper mapper = new ObjectMapper();
         mapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
         return mapper.writeValueAsString(obj);
@@ -59,7 +59,7 @@ public class JsonUtils {
      * @return
      * @throws Exception
      */
-    public static <T> T json2pojo(String jsonString, Class<T> clazz) throws Exception {
+    public static <T> T jsonToPojo(String jsonString, Class<T> clazz) throws Exception {
         objectMapper.configure(DeserializationFeature.ACCEPT_SINGLE_VALUE_AS_ARRAY, true);
         return objectMapper.readValue(jsonString, clazz);
     }
@@ -71,7 +71,7 @@ public class JsonUtils {
      * @return
      * @throws Exception
      */
-    public static <T> Map<String, Object> json2map(String jsonString) throws Exception {
+    public static <T> Map<String, Object> jsonToMap(String jsonString) throws Exception {
         ObjectMapper mapper = new ObjectMapper();
         mapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
         return mapper.readValue(jsonString, Map.class);
@@ -80,12 +80,12 @@ public class JsonUtils {
     /**
      * 字符串转换为 Map<String, T>
      */
-    public static <T> Map<String, T> json2map(String jsonString, Class<T> clazz) throws Exception {
+    public static <T> Map<String, T> jsonToMap(String jsonString, Class<T> clazz) throws Exception {
         Map<String, Map<String, Object>> map = objectMapper.readValue(jsonString, new TypeReference<Map<String, T>>() {
         });
         Map<String, T> result = new HashMap<String, T>();
         for (Map.Entry<String, Map<String, Object>> entry : map.entrySet()) {
-            result.put(entry.getKey(), map2pojo(entry.getValue(), clazz));
+            result.put(entry.getKey(), mapToPojo(entry.getValue(), clazz));
         }
         return result;
     }
@@ -96,8 +96,8 @@ public class JsonUtils {
      * @param json
      * @return
      */
-    public static Map<String, Object> json2mapDeeply(String json) throws Exception {
-        return json2MapRecursion(json, objectMapper);
+    public static Map<String, Object> jsonToMapDeeply(String json) throws Exception {
+        return jsonToMapRecursion(json, objectMapper);
     }
 
     /**
@@ -108,7 +108,7 @@ public class JsonUtils {
      * @return
      * @throws Exception
      */
-    private static List<Object> json2ListRecursion(String json, ObjectMapper mapper) throws Exception {
+    private static List<Object> jsonToListRecursion(String json, ObjectMapper mapper) throws Exception {
         if (json == null) {
             return null;
         }
@@ -119,9 +119,9 @@ public class JsonUtils {
             if (obj != null && obj instanceof String) {
                 String str = (String) obj;
                 if (str.startsWith("[")) {
-                    obj = json2ListRecursion(str, mapper);
+                    obj = jsonToListRecursion(str, mapper);
                 } else if (obj.toString().startsWith("{")) {
-                    obj = json2MapRecursion(str, mapper);
+                    obj = jsonToMapRecursion(str, mapper);
                 }
             }
         }
@@ -137,7 +137,7 @@ public class JsonUtils {
      * @return
      * @throws Exception
      */
-    private static Map<String, Object> json2MapRecursion(String json, ObjectMapper mapper) throws Exception {
+    private static Map<String, Object> jsonToMapRecursion(String json, ObjectMapper mapper) throws Exception {
         if (json == null) {
             return null;
         }
@@ -150,10 +150,10 @@ public class JsonUtils {
                 String str = ((String) obj);
 
                 if (str.startsWith("[")) {
-                    List<?> list = json2ListRecursion(str, mapper);
+                    List<?> list = jsonToListRecursion(str, mapper);
                     map.put(entry.getKey(), list);
                 } else if (str.startsWith("{")) {
-                    Map<String, Object> mapRecursion = json2MapRecursion(str, mapper);
+                    Map<String, Object> mapRecursion = jsonToMapRecursion(str, mapper);
                     map.put(entry.getKey(), mapRecursion);
                 }
             }
@@ -170,7 +170,7 @@ public class JsonUtils {
      * @return
      * @throws Exception
      */
-    public static <T> List<T> json2list(String jsonArrayStr, Class<T> clazz) throws Exception {
+    public static <T> List<T> jsonToList(String jsonArrayStr, Class<T> clazz) throws Exception {
         JavaType javaType = getCollectionType(ArrayList.class, clazz);
         List<T> list = (List<T>) objectMapper.readValue(jsonArrayStr, javaType);
         return list;
@@ -196,7 +196,7 @@ public class JsonUtils {
      * @param clazz
      * @return
      */
-    public static <T> T map2pojo(Map map, Class<T> clazz) {
+    public static <T> T mapToPojo(Map map, Class<T> clazz) {
         return objectMapper.convertValue(map, clazz);
     }
 
@@ -222,7 +222,7 @@ public class JsonUtils {
      * @param clazz
      * @return
      */
-    public static <T> T obj2pojo(Object obj, Class<T> clazz) {
+    public static <T> T objTPojo(Object obj, Class<T> clazz) {
         return objectMapper.convertValue(obj, clazz);
     }
 }

@@ -21,7 +21,7 @@ public class RedisController {
     @PostMapping("/put")
     public String put(String key,String value,long seconds){
         redisService.put(key,value,seconds);
-        return "ok";
+        return "yes";
     }
 
     @GetMapping("/get")
