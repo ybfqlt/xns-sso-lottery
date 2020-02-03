@@ -19,20 +19,18 @@ public class RedisController {
     private RedisService redisService;
 
     @PostMapping("/put")
-    public String put(String key,String value,long seconds){
-        redisService.put(key,value,seconds);
+    public String put(String key, String value, long seconds) {
+        redisService.put(key, value, seconds);
         return "yes";
     }
 
     @GetMapping("/get")
-    public String get(String key){
+    public String get(String key) {
         Object o = redisService.get(key);
-        if(o!=null){
+        if (o != null) {
             String str = String.valueOf(o);
             return str;
         }
-        else{
-            return "no";
-        }
+        return "no";
     }
 }
