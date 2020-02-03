@@ -12,9 +12,9 @@ spring:
         max-idle: 8
         max-wait: -1ms
         min-idle: 0
-#    host:
-#    port:
-#    password:
+    host: 127.0.0.1
+    port: 6379
+    password:
 
 eureka:
   client:

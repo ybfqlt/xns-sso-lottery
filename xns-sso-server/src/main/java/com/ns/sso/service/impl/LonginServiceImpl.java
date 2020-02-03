@@ -51,7 +51,7 @@ public class LonginServiceImpl implements LoginService {
             if (user1.getUserPassword().equals(user.getUserPassword())) {
                 String json1 = null;
                 try {
-                    json1 = JsonUtils.objToJson(user);
+                    json1 = JsonUtils.objToJson(user1);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -65,7 +65,7 @@ public class LonginServiceImpl implements LoginService {
             try {
                 user1 = JsonUtils.jsonToPojo(json, User.class);
                 if (user.getUserPassword().equals(user1.getUserPassword())) {
-                    return user;
+                    return user1;
                 }
             } catch (Exception e) {
                 log.warn("熔断:{}", e.getMessage());
