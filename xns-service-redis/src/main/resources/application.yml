@@ -5,15 +5,16 @@ spring:
   application:
     name: servicecloud-redis
   redis:
+    #密码
     lettuce:
       pool:
         max-active: 8
         max-idle: 8
         max-wait: -1ms
         min-idle: 0
-    #host:
-    #port:
-    #password:
+#    host:
+#    port:
+#    password:
 
 eureka:
   client:
