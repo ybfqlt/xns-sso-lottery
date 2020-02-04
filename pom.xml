@@ -8,6 +8,7 @@
         <module>xns-sso-api</module>
         <module>xns-service-redis</module>
         <module>xns-service-eureka</module>
+        <module>xns-service-spike</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>
