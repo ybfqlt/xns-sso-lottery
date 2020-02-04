@@ -35,7 +35,7 @@ public class LoginController {
      */
     @ResponseBody
     @PostMapping("/register")
-    public Result register(@Validated @RequestBody User user,BindingResult bindingResult) throws Exception {
+    public Result register(@Validated @RequestBody User user, BindingResult bindingResult) throws Exception {
         if(bindingResult.hasErrors()){
             String s = JsonUtils.objToJson(bindingResult.getAllErrors());
             return new Result(s);
@@ -65,7 +65,7 @@ public class LoginController {
      */
     @ResponseBody
     @PostMapping("/login")
-    public Result login(@Validated @RequestBody User user,BindingResult bindingResult) throws Exception {
+    public Result login(@Validated @RequestBody User user,@RequestParam(required = false) String url,BindingResult bindingResult) throws Exception {
         if(bindingResult.hasErrors()){
             String s = JsonUtils.objToJson(bindingResult.getAllErrors());
             return new Result(s);

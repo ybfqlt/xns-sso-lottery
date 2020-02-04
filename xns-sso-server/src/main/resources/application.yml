@@ -27,12 +27,15 @@ spring:
       filters: stat,wall
       use-global-data-source-stat: true
 
-  thymeleaf:
-    cache: false #关闭缓存，不然无法看到实时页面
-    mode: LEGACYHTML5
-    encoding: UTF-8
-    servlet:
-      content-type: text/html
+#  thymeleaf:
+#    cache: false #关闭缓存，不然无法看到实时页面
+#    mode: LEGACYHTML5
+#    encoding: UTF-8
+#    servlet:
+#      content-type: text/html
+
+  mvc:
+    static-path-pattern: /**
 
 eureka:
   client:

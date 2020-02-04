@@ -1,39 +1,200 @@
+<!--<!DOCTYPE html>-->
+<!--<html lang="en" xmlns:th="http://www.thymeleaf.org">-->
+<!--<head>-->
+<!--    <meta charset="UTF-8">-->
+<!--    <title>xns单点登录</title>-->
+<!--    <meta content="width-device-width, initial-scale=1,maximum-scale=1 user-scalable=no" name="viewport"/>-->
+<!--</head>-->
+<!--<body>-->
+<!--&lt;!&ndash;<div class=":login-logo">&ndash;&gt;-->
+<!--&lt;!&ndash;    <a href="#">s</a>&ndash;&gt;-->
+<!--&lt;!&ndash;</div>&ndash;&gt;-->
+<!--<div class="login-box-body">-->
+<!--    <p class="login-box-msg">欢迎登录</p>-->
+<!--    <form action="/user/login" method="post">-->
+<!--                <div class="alter alter-danger alter-dismissible" th:if="${mes != null}">-->
+<!--                    <button type="button" class="close" data-dismiss="alter" aria-hidden="true">&times;</button>-->
+<!--                    <span th:text="${mes}"></span>-->
+<!--                </div>-->
+<!--        <div class="from-group has-feedback">-->
+<!--            <input name="userName" type="text" class="from-control" placeholder="名称">-->
+<!--        </div>-->
+<!--        <div class="from-group has-feedback">-->
+<!--            <input name="userPassword" type="password" class="from-control" placeholder="密码">-->
+<!--        </div>-->
+<!--        <div class="row">-->
+<!--            <div class="col-xs-8">-->
+<!--                <div class="checkbox icon-check">-->
+<!--                    <label>-->
+<!--                        <input name="isRemember" type="checkbox">记住我-->
+<!--                    </label>-->
+<!--                </div>-->
+<!--                <div class="col-xs-4">-->
+<!--                    <button type="submit" class="btn btn-primary btn-block btn-small">登录</button>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </form>-->
+<!--</div>-->
+<!--</body>-->
+<!--</html>-->
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="zh-cn">
 <head>
     <meta charset="UTF-8">
-    <title>xns单点登录</title>
-    <meta content="width-device-width, initial-scale=1,maximum-scale=1 user-scalable=no" name="viewport"/>
+    <meta content="IE=edge" http-equiv="X-UA-Compatible">
+    <meta content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no, width=device-width" name="viewport">
+    <title>xns--单点登陆</title>
+    <!-- css -->
+    <link href="/css/base.min.css" rel="stylesheet">
+    <link href="/css/project.min.css" rel="stylesheet">
+    <link href="/css/auth.css" rel="stylesheet">
+    <link href="/css/Material_Icons.css" rel="stylesheet">
 </head>
-<body>
-<!--<div class=":login-logo">-->
-<!--    <a href="#">s</a>-->
-<!--</div>-->
-<div class="login-box-body">
-    <p class="login-box-msg">欢迎登录</p>
-    <form action="/user/login" method="post">
-        <!--        <div class="alter alter-danger alter-dismissible">-->
-        <!--            <button type="button" class="close" data-dismiss="alter" aria-hidden="true">&times;</button>-->
-        <!--        </div>-->
-        <div class="from-group has-feedback">
-            <input name="userName" type="text" class="from-control" placeholder="名称">
-        </div>
-        <div class="from-group has-feedback">
-            <input name="userPassword" type="password" class="from-control" placeholder="密码">
-        </div>
-        <div class="row">
-            <div class="col-xs-8">
-                <div class="checkbox icon-check">
-                    <label>
-                        <input name="isRemember" type="checkbox">记住我
-                    </label>
+<body class="page-brand">
+<div class="authpage">
+    <div class="container">
+        <form action="javascript:void(0);" method="POST">
+            <div class="auth-main auth-row auth-col-one">
+                <div class="auth-top auth-row"><a class="boardtop-left">
+                    <div>欢迎使用</div>
+                </a>
+                    <div class="auth-logo"><img src="../images/ic_login.jpg" alt=""></div>
+                    <a href="../html/register.html" class="boardtop-right">
+                        <div>注册</div>
+                    </a></div>
+                <div class="auth-row">
+                    <div class="form-group-label auth-row row-login">
+                        <label class="floating-label" for="name">用户名</label>
+                        <input class="form-control maxwidth-auth" id="name" type="text" name="userName">
+                    </div>
                 </div>
-                <div class="col-xs-4">
-                    <button type="submit" class="btn btn-primary btn-block btn-small">登录</button>
+                <div class="auth-row">
+                    <div class="form-group-label auth-row row-login">
+                        <label class="floating-label" for="password">密码</label>
+                        <input class="form-control maxwidth-auth" id="password" type="password" name="userPassword">
+                    </div>
+                </div>
+                <div class="btn-auth auth-row">
+                    <button id="login" type="submit" class="btn btn-block btn-brand waves-attach waves-light">确认登录
+                    </button>
                 </div>
             </div>
-        </div>
-    </form>
+        </form>
+    </div>
 </div>
+<div aria-hidden="true" class="modal modal-va-middle fade" id="result" role="dialog" tabindex="-1">
+    <div class="modal-dialog modal-xs">
+        <div class="modal-content">
+            <div class="modal-inner">
+                <p class="h5 margin-top-sm text-black-hint" id="msg"></p>
+            </div>
+            <div class="modal-footer">
+                <p class="text-right">
+                    <button class="btn btn-flat btn-brand-accent waves-attach" data-dismiss="modal" type="button"
+                            id="result_ok">知道了
+                    </button>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+<footer class="ui-footer">
+    <div class="container">
+        <marquee>
+            &copy;2020 xns-sso
+        </marquee>
+    </div>
+</footer>
+<canvas id="c_n1"></canvas>
+<!-- js -->
+<script src="/js/jquery.min.js" type="text/javascript"></script>
+<script src="/js/gt.js" type="text/javascript"></script>
+<script src="/js/base.min.js" type="text/javascript"></script>
+<script src="/js/project.min.js" type="text/javascript"></script>
+<script src="/js/canvas-nest.js" type="text/javascript"></script>
+<script src="/js/md5.js" type="text/javascript"></script>
+<script src="/js/qrcode.min.js" type="text/javascript"></script>
 </body>
 </html>
+<script>
+    $(document).ready(function () {
+        function login() {
+            document.getElementById("login").disabled = true;
+
+            var name = document.getElementById("name").value;
+            var password = document.getElementById("password").value;
+
+            if (name.length == 0) {
+                $("#result").modal();
+                $("#msg").html("！！！请输入用户名！！！");
+            } else if (name.length < 6 || name.length > 20) {
+                $("#result").modal();
+                $("#msg").html("！！！用户名长度范围为６～20,请重新输入！！！");
+            } else {
+                if (password.length == 0) {
+                    $("#result").modal();
+                    $("#msg").html("！！！请输入密码！！！");
+                } else if (password.length < 8 || password.length > 25) {
+                    $("#result").modal();
+                    $("#msg").html("！！！密码长度出错,请控制在８～25之间！！！");
+                } else {
+                    var json = {
+                        "userName": name,
+                        "userPassword": password
+                    };
+                    $.ajax({
+                        type: "POST",
+                        url: "http://localhost:8001/user/login",
+                        async: true,
+                        data: JSON.stringify(json),
+                        dataType: "json",
+                        contentType: 'application/json',
+                        xhrFields: {
+                            withCredentials: true
+                        },
+                        success: function (data) {
+                            //用户名密码都正确时loginInfo的值为true
+                            if (data.code == 200) {
+                                $("#result").modal();
+                                $("#msg").html("登陆成功");
+                                window.setTimeout(function () {
+                                    window.location = "/index.html"
+                                }, 1200);
+                            }
+                            //用户名存在，但对应密码校验错误时loginInfo的值为false
+                            else if (data.code == 500) {
+                                $("#result").modal();
+                                $("#msg").html("密码错误");
+                                document.getElementById("login").disabled = false;
+                            }
+                            //用户名不存在
+                            else {
+                                $("#result").modal();
+                                $("#msg").html("用户名不存在");
+                                document.getElementById("login").disabled = false;
+                            }
+                        },
+                        error: function () {
+                            alert("error");
+                        }
+                    });
+                }
+            }
+
+            document.getElementById("login").disabled = false;
+        }
+
+        $("#login").click(function () {
+            login();
+        });
+
+        $('div.modal').on('shown.bs.modal', function () {
+            $("div.gt_slider_knob").hide();
+        });
+
+        $('div.modal').on('hidden.bs.modal', function () {
+            $("div.gt_slider_knob").show();
+        });
+    })
+</script>
