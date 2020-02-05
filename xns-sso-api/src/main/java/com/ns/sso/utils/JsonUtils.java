@@ -11,15 +11,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-/**
- * Jackson 工具类
- * <p>Title: MapperUtils</p>
- * <p>Description: </p>
- *
- * @author Lusifer
- * @version 1.0.0
- * @date 2018/3/4 21:50
- */
+
 public class JsonUtils {
     private final static ObjectMapper objectMapper = new ObjectMapper();
 
