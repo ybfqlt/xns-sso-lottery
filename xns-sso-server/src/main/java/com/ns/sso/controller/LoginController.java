@@ -106,7 +106,7 @@ public class LoginController {
             if (StatusConstants.STATUS_YES.equals(json)) {
                 CookieUtils.setCookie(httpServletRequest, httpServletResponse, "token", token, 60 * 60);
                 if (!StringUtils.isNullOrEmpty(url)) {
-                    return new Result<String>(CodeConstants.CODE_REDIRECT,null,url);
+                    return new Result<String>(CodeConstants.CODE_REDIRECT,"登陆成功",url);
                 }
             } else {
                 return new Result(CodeConstants.CODE_FAIL,"网络不给力，请再试一次");
