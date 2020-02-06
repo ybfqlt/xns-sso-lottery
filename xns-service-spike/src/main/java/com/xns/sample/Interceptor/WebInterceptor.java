@@ -4,7 +4,6 @@ import com.ns.sso.entities.User;
 import com.ns.sso.service.consumer.RedisClientService;
 import com.ns.sso.utils.CookieUtils;
 import com.ns.sso.utils.JsonUtils;
-import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.servlet.HandlerInterceptor;
@@ -29,7 +28,7 @@ public class WebInterceptor implements HandlerInterceptor {
         String token = CookieUtils.getCookieValue(request, "token");
         if (StringUtils.isBlank(token)) {
             System.out.println(request.getRequestURL());
-            response.sendRedirect("http://127.0.0.1/user/login?url=" + request.getRequestURL());
+            response.sendRedirect("http://127.0.0.1:8001/user/login?url=" + request.getRequestURL());
         } else {
             return true;
         }
@@ -53,6 +52,8 @@ public class WebInterceptor implements HandlerInterceptor {
                     }
                 }
             }
+        }else{
+            response.sendRedirect("http://127.0.0.1:8001/user/login?url=" + request.getRequestURL());
         }
     }
 

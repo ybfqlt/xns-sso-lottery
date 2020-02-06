@@ -1,3 +1,16 @@
 server:
   port: 8002
 
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:7001/eureka
+  instance:
+    instance-id: service-spike8002
+    prefer-ip-address: true
+
+info:
+  app.name: xns-sso
+  company.name: www.xns.com
+  build.artifactId: $project.artifactId$
+  build.version: $project.version$
