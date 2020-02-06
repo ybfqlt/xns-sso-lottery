@@ -1,23 +1,31 @@
 package com.ns.sso.controller;
 
+import com.mysql.jdbc.StringUtils;
+import com.ns.sso.constants.CodeConstants;
+import com.ns.sso.constants.StatusConstants;
 import com.ns.sso.dto.Result;
 import com.ns.sso.entities.User;
 import com.ns.sso.service.LoginService;
 import com.ns.sso.service.consumer.RedisClientService;
+import com.ns.sso.utils.CookieUtils;
 import com.ns.sso.utils.JsonUtils;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.ObjectError;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.UUID;
 
 /**
  * @Author: xns
  * @Date: 20-1-28 下午7:33
  */
+@Slf4j
 @Controller
 @RequestMapping("/user")
 public class LoginController {
@@ -30,20 +38,21 @@ public class LoginController {
 
     /**
      * 注册
+     *
      * @param user
      * @return
      */
     @ResponseBody
     @PostMapping("/register")
     public Result register(@Validated @RequestBody User user, BindingResult bindingResult) throws Exception {
-        if(bindingResult.hasErrors()){
+        if (bindingResult.hasErrors()) {
             String s = JsonUtils.objToJson(bindingResult.getAllErrors());
-            return new Result(s);
+            log.error(s);
         }
-        if(user != null){
+        if (user != null) {
             loginService.register(user);
         }
-        return new Result<Object>(null);
+        return new Result();
     }
 
 
@@ -52,12 +61,28 @@ public class LoginController {
      * @return
      */
     @GetMapping("/login")
-    public String login(){
+    public String login(HttpServletRequest httpServletRequest, @RequestParam(required = false) String url,Model model) {
+        String token = CookieUtils.getCookieValue(httpServletRequest, "token");
+        if(!StringUtils.isNullOrEmpty(token)){
+            String name = redisClientService.get(token);
+            if(!StringUtils.isNullOrEmpty(name)){
+                if(!StringUtils.isNullOrEmpty(url)){
+                    return "redirect"+url;
+                }else{//已经登录，url为空
+                    model.addAttribute("url","");
+                }
+            }
+        }else{//未登录，且url不为空
+            if(!StringUtils.isNullOrEmpty(url)){
+                model.addAttribute("url",url);
+            }
+        }
         return "login";
     }
 
     /**
      * 登录
+     *
      * @param user
      * @param bindingResult
      * @return
@@ -65,18 +90,28 @@ public class LoginController {
      */
     @ResponseBody
     @PostMapping("/login")
-    public Result login(@Validated @RequestBody User user,@RequestParam(required = false) String url,BindingResult bindingResult) throws Exception {
-        if(bindingResult.hasErrors()){
+    public Result login(@Validated @RequestBody User user, @RequestParam(required = false) String url, HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, BindingResult bindingResult) throws Exception {
+        String mes;
+        if (bindingResult.hasErrors()) {
             String s = JsonUtils.objToJson(bindingResult.getAllErrors());
-            return new Result(s);
+            log.error(s);
         }
         User login = loginService.login(user);
-        if(login == null){
-            return new Result().no("密码错误/不存在此用户");
-        }else{
+        //登录失败
+        if (login == null){
+            return new Result(CodeConstants.CODE_FAIL,"密码错误/不存在此用户,请重新输入");
+        } else {
             String token = UUID.randomUUID().toString();
-            redisClientService.put(token,login.getUserName(),60*60);
-            return new Result("登陆成功");
+            String json = redisClientService.put(token, login.getUserName(), 60 * 60);
+            if (StatusConstants.STATUS_YES.equals(json)) {
+                CookieUtils.setCookie(httpServletRequest, httpServletResponse, "token", token, 60 * 60);
+                if (!StringUtils.isNullOrEmpty(url)) {
+                    return new Result<String>(CodeConstants.CODE_REDIRECT,null,url);
+                }
+            } else {
+                return new Result(CodeConstants.CODE_FAIL,"网络不给力，请再试一次");
+            }
         }
+        return new Result(CodeConstants.CODE_SUCCESS,"登陆成功");
     }
 }
