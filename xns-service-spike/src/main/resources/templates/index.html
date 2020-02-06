@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Neon Text</title>
+    <link href="https://fonts.font.im/css?family=Monoton" rel="stylesheet">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: #000;
+        }
+
+        .neon-wrap {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+        }
+
+        .neon-wrap span {
+            display: block;
+        }
+
+        .neon-text {
+            font-family: 'Monoton', cursive;
+            font-size: 100px;
+            animation: neon 4s infinite;
+        }
+
+        .neon-by {
+            color: #e91e63;
+            text-shadow: -3px 0px 5px #e91e63, 0px 0px 2px #e91e63;
+        }
+
+        @keyframes neon {
+            0%, 30%, 32%, 34% {
+                color: #222;
+                text-shadow: -3px 0px 5px #222, 0px 0px 2px #222;
+            }
+            31%, 33%, 35%, 100% {
+                color: #e91e63;
+                text-shadow: -3px 0px 5px #e91e63, 0px 0px 2px #e91e63;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="neon-wrap">
+    <span class="neon-text">`${user.userName}`</span>
+    <div id="show" class="neon-by"></div>
+</div>
+
+<script>
+    window.onload = function () {
+        setInterval(function () {
+            var date = new Date();
+            var year = date.getFullYear(); //获取当前年份
+            var mon = date.getMonth() + 1; //获取当前月份
+            var da = date.getDate(); //获取当前日
+            var day = date.getDay(); //获取当前星期几
+            var h = date.getHours(); //获取小时
+            var m = date.getMinutes(); //获取分钟
+            var s = date.getSeconds(); //获取秒
+            var d = document.getElementById('show');
+
+            //判断当数字小于等于9时 显示 01 02 ----- 08 09
+            if (mon >= 1 && mon <= 9) {
+                mon = "0" + mon;
+            }
+            if (da >= 0 && da <= 9) {
+                da = "0" + da;
+            }
+            if (h >= 0 && h <= 9) {
+                h = "0" + h;
+            }
+
+            if (m >= 0 && m <= 9) {
+                m = "0" + m;
+            }
+
+            if (s >= 0 && s <= 9) {
+                s = "0" + s;
+            }
+
+            d.innerHTML = year + '-' + mon + '-' + da + ' ' + h + ':' + m + ':' + s;
+
+        }, 1000)
+    }
+</script>
+</body>
+</html>
