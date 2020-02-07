@@ -30,7 +30,6 @@ public class WebInterceptor implements HandlerInterceptor {
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         String token = CookieUtils.getCookieValue(request, "token");
         if (StringUtils.isBlank(token)) {
-            System.out.println(request.getRequestURL());
             response.sendRedirect("http://localhost:8001/user/login?url=" + request.getRequestURL());
         } else {
             return true;

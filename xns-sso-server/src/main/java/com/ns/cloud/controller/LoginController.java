@@ -59,24 +59,24 @@ public class LoginController {
 
     /**
      * 访问登录页面
+     *
      * @return
      */
     @GetMapping("/login")
-    public String login(HttpServletRequest httpServletRequest, @RequestParam(required = false) String url,Model model) {
+    public String login(HttpServletRequest httpServletRequest, @RequestParam(required = false) String url, Model model) {
         String token = CookieUtils.getCookieValue(httpServletRequest, "token");
-        if(StringUtils.isNotBlank(token)){
+        if (StringUtils.isNotBlank(token)) {
             String name = redisClientService.get(token);
-            if(StringUtils.isNotBlank(name)){
-                if(StringUtils.isNotBlank(url)){
-                    return "redirect"+url;
-                }else{//已经登录，url为空
-                    model.addAttribute("url","");
+            if (StringUtils.isNotBlank(name)) {
+                if (StringUtils.isNotBlank(url)) {
+                    return "redirect" + url;
+                } else {//已经登录，url为空
+                    model.addAttribute("url", "");
                 }
             }
-        }else{//未登录，且url不为空
-            if(StringUtils.isNotBlank(url)){
-                model.addAttribute("url",url);
-            }
+        }
+        if (StringUtils.isNotBlank(url)) {
+            model.addAttribute("url", url);
         }
         return "login";
     }
@@ -100,20 +100,20 @@ public class LoginController {
         }
         User login = loginService.login(user);
         //登录失败
-        if (login == null){
-            return new Result(CodeConstants.CODE_FAIL,"密码错误/不存在此用户,请重新输入");
+        if (login == null) {
+            return new Result(CodeConstants.CODE_FAIL, "密码错误/不存在此用户,请重新输入");
         } else {
             String token = UUID.randomUUID().toString();
             String json = redisClientService.put(token, login.getUserName(), 60 * 60);
             if (StatusConstants.STATUS_YES.equals(json)) {
                 CookieUtils.setCookie(httpServletRequest, httpServletResponse, "token", token, 60 * 60);
                 if (StringUtils.isNotBlank(url)) {
-                    return new Result<String>(CodeConstants.CODE_REDIRECT,"登陆成功",url);
+                    return new Result<String>(CodeConstants.CODE_REDIRECT, "登陆成功", url);
                 }
             } else {
-                return new Result(CodeConstants.CODE_FAIL,"网络不给力，请再试一次");
+                return new Result(CodeConstants.CODE_FAIL, "网络不给力，请再试一次");
             }
         }
-        return new Result(CodeConstants.CODE_SUCCESS,"登陆成功");
+        return new Result(CodeConstants.CODE_SUCCESS, "登陆成功");
     }
 }
