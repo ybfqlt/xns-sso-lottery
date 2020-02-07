@@ -50,7 +50,7 @@ public class WebInterceptor implements HandlerInterceptor {
                     String s1 = redisClientService.get(s);
                     if (StringUtils.isNotBlank(s1)) {
                         User user1 = JsonUtils.jsonToPojo(s1,User.class);
-                        httpSession.setAttribute("user",user1);
+                        httpSession.setAttribute("name",user1.getUserName());
                     }
                     else{
                         response.sendRedirect("http://localhost:8001/user/login?url=" + request.getRequestURL());

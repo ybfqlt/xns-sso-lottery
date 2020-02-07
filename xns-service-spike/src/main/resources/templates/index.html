@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -54,7 +54,10 @@
 </head>
 <body>
 <div class="neon-wrap">
-    <span class="neon-text">`${user.userName}`</span>
+    <!--当前登录用户-->
+    <span class="neon-text">
+        <label th:text="${session.name}"></label>
+    </span>
     <div id="show" class="neon-by"></div>
 </div>
 
