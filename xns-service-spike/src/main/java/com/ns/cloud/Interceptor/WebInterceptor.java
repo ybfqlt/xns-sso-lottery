@@ -31,7 +31,7 @@ public class WebInterceptor implements HandlerInterceptor {
         String token = CookieUtils.getCookieValue(request, "token");
         if (StringUtils.isBlank(token)) {
             System.out.println(request.getRequestURL());
-            response.sendRedirect("http://127.0.0.1:8001/user/login?url=" + request.getRequestURL());
+            response.sendRedirect("http://localhost:8001/user/login?url=" + request.getRequestURL());
         } else {
             return true;
         }
@@ -52,10 +52,18 @@ public class WebInterceptor implements HandlerInterceptor {
                         User user1 = JsonUtils.jsonToPojo(s1,User.class);
                         httpSession.setAttribute("user",user1);
                     }
+                    else{
+                        response.sendRedirect("http://localhost:8001/user/login?url=" + request.getRequestURL());
+                    }
+                }else{
+                    response.sendRedirect("http://localhost:8001/user/login?url=" + request.getRequestURL());
                 }
             }
+            else{
+                response.sendRedirect("http://localhost:8001/user/login?url=" + request.getRequestURL());
+            }
         }else{
-            response.sendRedirect("http://127.0.0.1:8001/user/login?url=" + request.getRequestURL());
+            response.sendRedirect("http://localhost:8001/user/login?url=" + request.getRequestURL());
         }
     }
 

@@ -31,6 +31,7 @@ public class RedisController {
             String str = String.valueOf(o);
             return str;
         }
-        return "no";
+        //方便后面使用
+        return null;
     }
 }

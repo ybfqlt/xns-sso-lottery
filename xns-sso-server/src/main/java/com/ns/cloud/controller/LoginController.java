@@ -1,6 +1,7 @@
 package com.ns.cloud.controller;
 
-import com.mysql.jdbc.StringUtils;
+
+import org.apache.commons.lang.StringUtils;
 import com.ns.cloud.constants.CodeConstants;
 import com.ns.cloud.constants.StatusConstants;
 import com.ns.cloud.dto.Result;
@@ -63,17 +64,17 @@ public class LoginController {
     @GetMapping("/login")
     public String login(HttpServletRequest httpServletRequest, @RequestParam(required = false) String url,Model model) {
         String token = CookieUtils.getCookieValue(httpServletRequest, "token");
-        if(!StringUtils.isNullOrEmpty(token)){
+        if(StringUtils.isNotBlank(token)){
             String name = redisClientService.get(token);
-            if(!StringUtils.isNullOrEmpty(name)){
-                if(!StringUtils.isNullOrEmpty(url)){
+            if(StringUtils.isNotBlank(name)){
+                if(StringUtils.isNotBlank(url)){
                     return "redirect"+url;
                 }else{//已经登录，url为空
                     model.addAttribute("url","");
                 }
             }
         }else{//未登录，且url不为空
-            if(!StringUtils.isNullOrEmpty(url)){
+            if(StringUtils.isNotBlank(url)){
                 model.addAttribute("url",url);
             }
         }
@@ -92,6 +93,7 @@ public class LoginController {
     @PostMapping("/login")
     public Result login(@Validated @RequestBody User user, @RequestParam(required = false) String url, HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, BindingResult bindingResult) throws Exception {
         String mes;
+        System.out.println(url);
         if (bindingResult.hasErrors()) {
             String s = JsonUtils.objToJson(bindingResult.getAllErrors());
             log.error(s);
@@ -105,7 +107,7 @@ public class LoginController {
             String json = redisClientService.put(token, login.getUserName(), 60 * 60);
             if (StatusConstants.STATUS_YES.equals(json)) {
                 CookieUtils.setCookie(httpServletRequest, httpServletResponse, "token", token, 60 * 60);
-                if (!StringUtils.isNullOrEmpty(url)) {
+                if (StringUtils.isNotBlank(url)) {
                     return new Result<String>(CodeConstants.CODE_REDIRECT,"登陆成功",url);
                 }
             } else {

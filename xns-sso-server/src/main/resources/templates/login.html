@@ -1,45 +1,6 @@
-<!--<!DOCTYPE html>-->
-<!--<html lang="en" xmlns:th="http://www.thymeleaf.org">-->
-<!--<head>-->
-<!--    <meta charset="UTF-8">-->
-<!--    <title>xns单点登录</title>-->
-<!--    <meta content="width-device-width, initial-scale=1,maximum-scale=1 user-scalable=no" name="viewport"/>-->
-<!--</head>-->
-<!--<body>-->
-<!--&lt;!&ndash;<div class=":login-logo">&ndash;&gt;-->
-<!--&lt;!&ndash;    <a href="#">s</a>&ndash;&gt;-->
-<!--&lt;!&ndash;</div>&ndash;&gt;-->
-<!--<div class="login-box-body">-->
-<!--    <p class="login-box-msg">欢迎登录</p>-->
-<!--    <form action="/user/login" method="post">-->
-<!--                <div class="alter alter-danger alter-dismissible" th:if="${mes != null}">-->
-<!--                    <button type="button" class="close" data-dismiss="alter" aria-hidden="true">&times;</button>-->
-<!--                    <span th:text="${mes}"></span>-->
-<!--                </div>-->
-<!--        <div class="from-group has-feedback">-->
-<!--            <input name="userName" type="text" class="from-control" placeholder="名称">-->
-<!--        </div>-->
-<!--        <div class="from-group has-feedback">-->
-<!--            <input name="userPassword" type="password" class="from-control" placeholder="密码">-->
-<!--        </div>-->
-<!--        <div class="row">-->
-<!--            <div class="col-xs-8">-->
-<!--                <div class="checkbox icon-check">-->
-<!--                    <label>-->
-<!--                        <input name="isRemember" type="checkbox">记住我-->
-<!--                    </label>-->
-<!--                </div>-->
-<!--                <div class="col-xs-4">-->
-<!--                    <button type="submit" class="btn btn-primary btn-block btn-small">登录</button>-->
-<!--                </div>-->
-<!--            </div>-->
-<!--        </div>-->
-<!--    </form>-->
-<!--</div>-->
-<!--</body>-->
-<!--</html>-->
 <!DOCTYPE html>
-<html lang="zh-cn">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<!--<html lang="zh-cn">-->
 <head>
     <meta charset="UTF-8">
     <meta content="IE=edge" http-equiv="X-UA-Compatible">
@@ -63,6 +24,7 @@
                     <a href="/html/register.html" class="boardtop-right">
                         <div>注册</div>
                     </a></div>
+                <input type="hidden" id="url" name="url" th:value="${url}"/>
                 <div class="auth-row">
                     <div class="form-group-label auth-row row-login">
                         <label class="floating-label" for="name">用户名</label>
@@ -124,6 +86,11 @@
 
             var name = document.getElementById("name").value;
             var password = document.getElementById("password").value;
+            var url = document.getElementById("url").value;
+            var str = "http://localhost:8001/user/login";
+            if(url!=null&&url.length>0){
+                str = "http://localhost:8001/user/login?url="+url;
+            }
 
             if (name.length == 0) {
                 $("#result").modal();
@@ -145,7 +112,7 @@
                     };
                     $.ajax({
                         type: "POST",
-                        url: "http://localhost:8001/user/login",
+                        url: str,
                         async: true,
                         data: JSON.stringify(json),
                         dataType: "json",

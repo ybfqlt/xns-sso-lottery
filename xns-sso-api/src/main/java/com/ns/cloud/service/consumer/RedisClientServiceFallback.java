@@ -16,23 +16,11 @@ public class RedisClientServiceFallback implements FallbackFactory<RedisClientSe
         return new RedisClientService() {
             @Override
             public String put(String key, String value, long seconds) {
-               Result result = new Result().no("该key:"+key+"put失败");
-               try{
-                   return JsonUtils.objToJson(result);
-               }catch (Exception e){
-                   e.printStackTrace();
-               }
                return null;
             }
 
             @Override
             public String get(String key) {
-                Result result = new Result().no("该key:"+key+"没有对应的value,即不存在");
-                try{
-                    return JsonUtils.objToJson(result);
-                }catch (Exception e){
-                    e.printStackTrace();
-                }
                 return null;
             }
         };

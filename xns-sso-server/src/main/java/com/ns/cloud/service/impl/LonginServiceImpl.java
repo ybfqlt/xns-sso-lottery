@@ -8,6 +8,7 @@ import com.ns.cloud.service.consumer.RedisClientService;
 import com.ns.cloud.utils.IdWorker;
 import com.ns.cloud.utils.JsonUtils;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -43,7 +44,7 @@ public class LonginServiceImpl implements LoginService {
     public User login(User user) {
         String json = redisClientService.get(user.getUserName());
 
-        if (StatusConstants.STATUS_NO.equals(json)) {
+        if (StringUtils.isBlank(json)) {
             User user1 = userMapper.findByName(user.getUserName());
             if (user1 == null) {
                 return null;
