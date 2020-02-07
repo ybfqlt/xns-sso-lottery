@@ -1,6 +1,10 @@
 server:
   port: 8002
 
+spring:
+  application:
+    name: xns-service-spike
+
 eureka:
   client:
     service-url:
@@ -8,6 +12,10 @@ eureka:
   instance:
     instance-id: service-spike8002
     prefer-ip-address: true
+
+feign:
+  hystrix:
+    enabled: true
 
 info:
   app.name: xns-sso
