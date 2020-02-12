@@ -46,7 +46,6 @@
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-config</artifactId>
         </dependency>
-
         <!-- actuator监控信息完善-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -59,6 +58,7 @@
             <artifactId>spring-cloud-starter-feign</artifactId>
             <version>1.4.6.RELEASE</version>
         </dependency>
+
     </dependencies>
 
     <build>
@@ -68,6 +68,6 @@
                 <filtering>true</filtering>
             </resource>
         </resources>
-        <finalName>xns-sso-server</finalName>
+        <finalName>xns-sso-spike</finalName>
     </build>
 </project>

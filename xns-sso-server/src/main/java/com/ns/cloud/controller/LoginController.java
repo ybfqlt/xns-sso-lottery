@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.util.UUID;
 
 /**
@@ -69,7 +70,7 @@ public class LoginController {
             String name = redisClientService.get(token);
             if (StringUtils.isNotBlank(name)) {
                 if (StringUtils.isNotBlank(url)) {
-                    return "redirect" + url;
+                    return "redirect:" + url;
                 } else {//已经登录，url为空
                     model.addAttribute("url", "");
                 }
@@ -107,6 +108,8 @@ public class LoginController {
             String json = redisClientService.put(token, login.getUserName(), 60 * 60);
             if (StatusConstants.STATUS_YES.equals(json)) {
                 CookieUtils.setCookie(httpServletRequest, httpServletResponse, "token", token, 60 * 60);
+                HttpSession session = httpServletRequest.getSession();
+                session.setAttribute("name",login.getUserName());
                 if (StringUtils.isNotBlank(url)) {
                     return new Result<String>(CodeConstants.CODE_REDIRECT, "登陆成功", url);
                 }
