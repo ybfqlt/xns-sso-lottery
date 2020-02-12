@@ -87,9 +87,9 @@
             var name = document.getElementById("name").value;
             var password = document.getElementById("password").value;
             var url = document.getElementById("url").value;
-            var str = "http://localhost:8001/user/login";
+            var str = "http://localhost:8001/sso/login";
             if(url!=null&&url.length>0){
-                str = "http://localhost:8001/user/login?url="+url;
+                str = "http://localhost:8001/sso/login?url="+url;
             }
 
             if (name.length == 0) {

@@ -29,7 +29,7 @@ import java.util.UUID;
  */
 @Slf4j
 @Controller
-@RequestMapping("/user")
+@RequestMapping("/sso")
 public class LoginController {
 
     @Autowired
@@ -108,8 +108,6 @@ public class LoginController {
             String json = redisClientService.put(token, login.getUserName(), 60 * 60);
             if (StatusConstants.STATUS_YES.equals(json)) {
                 CookieUtils.setCookie(httpServletRequest, httpServletResponse, "token", token, 60 * 60);
-                HttpSession session = httpServletRequest.getSession();
-                session.setAttribute("name",login.getUserName());
                 if (StringUtils.isNotBlank(url)) {
                     return new Result<String>(CodeConstants.CODE_REDIRECT, "登陆成功", url);
                 }
@@ -119,4 +117,22 @@ public class LoginController {
         }
         return new Result(CodeConstants.CODE_SUCCESS, "登陆成功");
     }
+
+
+    /**
+     * 注销
+     * @param token
+     * @param httpServletRequest
+     * @param httpServletResponse
+     * @return
+     */
+    @PostMapping("/logout")
+    public String Logout(String token,HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse){
+        if(StringUtils.isNotBlank(token)){
+            CookieUtils.deleteCookie(httpServletRequest,httpServletResponse,"token");
+            redisClientService.delete(token);
+        }
+        return "login";
+    }
+
 }

@@ -17,4 +17,7 @@ public interface RedisClientService {
 
     @GetMapping("/redis/get")
     public String get(@RequestParam String key);
+
+    @PostMapping("/delete")
+    public String delete(String key);
 }

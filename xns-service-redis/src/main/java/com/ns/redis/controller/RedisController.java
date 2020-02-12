@@ -34,4 +34,10 @@ public class RedisController {
         //方便后面使用
         return null;
     }
+
+    @PostMapping("/delete")
+    public String delete(String key) {
+        Boolean a = redisService.delete(key);
+        return "yes";
+    }
 }

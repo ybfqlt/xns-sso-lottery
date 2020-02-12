@@ -3,6 +3,7 @@ package com.ns.cloud.config;
 import com.ns.cloud.Interceptor.WebInterceptor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
@@ -12,6 +13,11 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
  */
 @Configuration
 public class WebConfig implements WebMvcConfigurer{
+
+    @Bean
+    public RestTemplate getRestemplate(){
+        return new RestTemplate();
+    }
 
     //必须加，否则WebInterceptor会为null,不能注册到容器
     @Bean

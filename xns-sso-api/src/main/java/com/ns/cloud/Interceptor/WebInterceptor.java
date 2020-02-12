@@ -5,7 +5,7 @@ import com.ns.cloud.service.consumer.RedisClientService;
 import com.ns.cloud.utils.CookieUtils;
 import com.ns.cloud.utils.JsonUtils;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
@@ -33,7 +33,7 @@ public class WebInterceptor implements HandlerInterceptor {
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         String token = CookieUtils.getCookieValue(request, "token");
         if (StringUtils.isBlank(token)) {
-            response.sendRedirect("http://localhost:8001/user/login?url=" + request.getRequestURL());
+            response.sendRedirect("http://localhost:8001/sso/login?url=" + request.getRequestURL());
         } else {
             return true;
         }
@@ -55,18 +55,17 @@ public class WebInterceptor implements HandlerInterceptor {
                         httpSession.setAttribute("name",user1.getUserName());
                     }
                     else{
-                        response.sendRedirect("http://localhost:8001/user/login?url=" + request.getRequestURL());
+                        response.sendRedirect("http://localhost:8001/sso/login?url=" + request.getRequestURL());
                     }
                 }else{
-                    response.sendRedirect("http://localhost:8001/user/login?url=" + request.getRequestURL());
+                    response.sendRedirect("http://localhost:8001/sso/login?url=" + request.getRequestURL());
                 }
             }
             else{
-                response.sendRedirect("http://localhost:8001/user/login?url=" + request.getRequestURL());
+                response.sendRedirect("http://localhost:8001/sso/login?url=" + request.getRequestURL());
             }
         }else{
             log.info(LocalDateTime.now()+" 用户名:"+user);
-//            response.sendRedirect("http://localhost:8001/user/login?url=" + request.getRequestURL());
         }
     }
 

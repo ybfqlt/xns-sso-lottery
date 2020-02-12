@@ -23,6 +23,11 @@ public class RedisClientServiceFallback implements FallbackFactory<RedisClientSe
             public String get(String key) {
                 return null;
             }
+
+            @Override
+            public String delete(String key) {
+                return null;
+            }
         };
     }
 }
