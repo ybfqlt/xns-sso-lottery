@@ -130,6 +130,8 @@ public class LoginController {
     public String Logout(String token,HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse){
         if(StringUtils.isNotBlank(token)){
             CookieUtils.deleteCookie(httpServletRequest,httpServletResponse,"token");
+            String s = redisClientService.get(token);
+            redisClientService.delete(s);
             redisClientService.delete(token);
         }
         return "login";
