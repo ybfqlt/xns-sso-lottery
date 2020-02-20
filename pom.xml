@@ -8,7 +8,7 @@
         <module>xns-sso-api</module>
         <module>xns-service-redis</module>
         <module>xns-service-eureka</module>
-        <module>xns-service-spike</module>
+        <module>xns-service-lottery</module>
         <module>xns-server-sample2</module>
     </modules>
     <parent>
