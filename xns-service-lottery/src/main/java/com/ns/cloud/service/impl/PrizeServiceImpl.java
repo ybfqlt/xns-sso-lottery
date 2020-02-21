@@ -1,6 +1,7 @@
 package com.ns.cloud.service.impl;
 
 import com.ns.cloud.dto.Result;
+import com.ns.cloud.entities.Prize;
 import com.ns.cloud.entities.Record;
 import com.ns.cloud.mapper.PrizeMapper;
 import com.ns.cloud.mapper.RecordMapper;
@@ -35,7 +36,10 @@ public class PrizeServiceImpl implements PrizeService {
         if(prizeId == null){
             return new Result(500,"prizeId不能为空");
         }
-        int judge = prizeMapper.updatePrizeStorage(prizeId);
+
+        Prize prize = prizeMapper.findByPrizeId(prizeId);
+
+        int judge = prizeMapper.updatePrizeStorage(prizeId,prize.getVersion());
         if(judge<=0){
             return new Result().no("未中奖");
         }

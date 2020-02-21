@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ns.cloud.mapper.PrizeMapper">
+
+    <resultMap id="BaseResultMap" type="com.ns.cloud.entities.Prize">
+        <result property="prizeId" column="prize_id"></result>
+        <result property="prizeName" column="prize_name"></result>
+        <result property="prizeMount" column="prize_mount"></result>
+        <result property="startTime" column="start_time"></result>
+        <result property="endTime" column="end_time"></result>
+        <result property="createTime" column="create_time"></result>
+        <result property="version" column="version"></result>
+    </resultMap>
+    <update id="updatePrizeStorage">
+        update prize set prize_mount=prize_mount-1,version = version+1 where prize_id = #{prizeId} and prize_mount > 0 and version = #{version}
+    </update>
+    <select id="findByPrizeId" resultMap="BaseResultMap">
+        select * from prize where prize_id = #{prizeId}
+    </select>
+
+
+</mapper>

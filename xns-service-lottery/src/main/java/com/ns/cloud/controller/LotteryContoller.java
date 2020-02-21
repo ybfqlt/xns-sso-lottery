@@ -17,7 +17,6 @@ public class LotteryContoller {
 
     @GetMapping("/lottery")
     public Result Lottery(@RequestParam("userId") String userId,@RequestParam("prizeId") Long prizeId){
-        System.out.println("ha");
         Result lottery = prizeService.lottery(userId, prizeId);
         return lottery;
     }
