@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ns.cloud.mapper.RecordMapper" >
+
+    <resultMap id="BaseResultMap" type="com.ns.cloud.entities.Record">
+        <result property="prizeId" column="prize_id"></result>
+        <result property="userId" column="user_id"></result>
+        <result property="state" column="state"></result>
+        <result property="createTime" column="create_time"></result>
+    </resultMap>
+    <insert id="insert">
+        insert into lottery_record values (#{record.prizeId},#{record.userId} , #{record.state} ,NOW())
+    </insert>
+</mapper>

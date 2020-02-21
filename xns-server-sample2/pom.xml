@@ -9,8 +9,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>xns-service-spike</artifactId>
-
+    <artifactId>xns-server-sample2</artifactId>
     <dependencies>
         <dependency>
             <groupId>com.ns</groupId>
@@ -59,21 +58,6 @@
             <version>1.4.6.RELEASE</version>
         </dependency>
 
-        <dependency>
-            <groupId>mysql</groupId>
-            <artifactId>mysql-connector-java</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>com.alibaba</groupId>
-            <artifactId>druid-spring-boot-starter</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>org.mybatis.spring.boot</groupId>
-            <artifactId>mybatis-spring-boot-starter</artifactId>
-        </dependency>
-
     </dependencies>
 
     <build>
@@ -83,6 +67,6 @@
                 <filtering>true</filtering>
             </resource>
         </resources>
-        <finalName>xns-sso-lottery</finalName>
+        <finalName>xns-sso-sample2</finalName>
     </build>
 </project>

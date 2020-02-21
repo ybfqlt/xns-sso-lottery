@@ -35,8 +35,8 @@ public class Result<T> implements Serializable {
         this.data = null;
     }
 
-    public Result no(String mes){
-        return new Result().setCode(500).setData(null).setMes(mes);
+    public Result<T> no(String mes){
+        return new Result<T>().setCode(500).setData(null).setMes(mes);
     }
 
 }
