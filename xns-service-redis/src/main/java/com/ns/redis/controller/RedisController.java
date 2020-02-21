@@ -40,4 +40,9 @@ public class RedisController {
         Boolean a = redisService.delete(key);
         return "yes";
     }
+
+    @PostMapping("/setnx")
+    public Boolean setnx(String key, String value, Long timeout){
+        return redisService.setNx(key,value,timeout);
+    }
 }

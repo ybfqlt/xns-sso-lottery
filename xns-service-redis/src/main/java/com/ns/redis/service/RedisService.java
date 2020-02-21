@@ -17,4 +17,6 @@ public interface RedisService {
     public Object get(String key);
 
     public Boolean delete(String key);
+
+    public Boolean setNx(String key,String value,Long timeout);
 }

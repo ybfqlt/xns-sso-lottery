@@ -28,6 +28,11 @@ public class RedisClientServiceFallback implements FallbackFactory<RedisClientSe
             public String delete(String key) {
                 return null;
             }
+
+            @Override
+            public Boolean setnx(String key, String value, Long timeout) {
+                return null;
+            }
         };
     }
 }

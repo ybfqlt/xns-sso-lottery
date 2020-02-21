@@ -18,6 +18,9 @@ public interface RedisClientService {
     @GetMapping("/redis/get")
     public String get(@RequestParam String key);
 
-    @PostMapping("/delete")
+    @PostMapping("/redis/delete")
     public String delete(String key);
+
+    @PostMapping("/redis/setnx")
+    public Boolean setnx(@RequestParam String key, @RequestParam String value, @RequestParam Long timeout);
 }

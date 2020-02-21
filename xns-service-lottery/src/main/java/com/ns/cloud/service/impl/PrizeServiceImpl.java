@@ -6,6 +6,7 @@ import com.ns.cloud.entities.Record;
 import com.ns.cloud.mapper.PrizeMapper;
 import com.ns.cloud.mapper.RecordMapper;
 import com.ns.cloud.service.PrizeService;
+import com.ns.cloud.service.consumer.RedisClientService;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -26,6 +27,9 @@ public class PrizeServiceImpl implements PrizeService {
     @Autowired
     RecordMapper recordMapper;
 
+    @Autowired
+    RedisClientService redisClientService;
+
 
     @Override
     @Transactional
@@ -38,6 +42,14 @@ public class PrizeServiceImpl implements PrizeService {
         }
 
         Prize prize = prizeMapper.findByPrizeId(prizeId);
+
+        Boolean setnx = redisClientService.setnx(userId,prizeId+"",60L);
+        if(setnx==null){
+            return new Result().no("网络问题，请稍后再试");
+        }
+        if(!setnx){
+            return new Result().no("访问次数太频繁,请在60秒后再试");
+        }
 
         int judge = prizeMapper.updatePrizeStorage(prizeId,prize.getVersion());
         if(judge<=0){

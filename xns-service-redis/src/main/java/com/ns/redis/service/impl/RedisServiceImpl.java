@@ -32,4 +32,21 @@ public class RedisServiceImpl implements RedisService {
     public Boolean delete(String key) {
         return redisTemplate.delete(key);
     }
+
+    /**
+     * 如果key存在的话返回false,不存在的话返回true
+     * @param key
+     * @param value
+     * @param timeout
+     * @return
+     */
+    @Override
+    public Boolean setNx(String key, String value, Long timeout) {
+        Boolean setIfAbsent = redisTemplate.opsForValue().setIfAbsent(key,value);
+        if(timeout != null){
+            redisTemplate.expire(key,timeout,TimeUnit.SECONDS);
+        }
+        return setIfAbsent;
+    }
+
 }
