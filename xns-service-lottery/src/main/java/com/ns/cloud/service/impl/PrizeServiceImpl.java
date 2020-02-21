@@ -60,6 +60,6 @@ public class PrizeServiceImpl implements PrizeService {
         record.setUserId(userId).setPrizeId(prizeId).setState(1).setCreateTime(LocalDateTime.now());
         recordMapper.insert(record);
 
-        return null;
+        return new Result(200,"恭喜你,中了哦!");
     }
 }
