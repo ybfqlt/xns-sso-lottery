@@ -3,7 +3,10 @@ package com.ns.cloud.service.consumer;
 import com.ns.cloud.dto.Result;
 import com.ns.cloud.utils.JsonUtils;
 import feign.hystrix.FallbackFactory;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
+
+import java.util.List;
 
 /**
  * @Author: xns
@@ -31,6 +34,16 @@ public class RedisClientServiceFallback implements FallbackFactory<RedisClientSe
 
             @Override
             public Boolean setnx(String key, String value, Long timeout) {
+                return null;
+            }
+
+            @Override
+            public Boolean setList(String key, List<String> list) {
+                return null;
+            }
+
+            @Override
+            public RedisTemplate getRetmp() {
                 return null;
             }
         };

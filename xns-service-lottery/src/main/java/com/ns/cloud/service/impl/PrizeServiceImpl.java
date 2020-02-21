@@ -1,5 +1,7 @@
 package com.ns.cloud.service.impl;
 
+import com.ns.cloud.constants.CodeConstants;
+import com.ns.cloud.constants.LotteryConstants;
 import com.ns.cloud.dto.Result;
 import com.ns.cloud.entities.Prize;
 import com.ns.cloud.entities.Record;
@@ -7,8 +9,10 @@ import com.ns.cloud.mapper.PrizeMapper;
 import com.ns.cloud.mapper.RecordMapper;
 import com.ns.cloud.service.PrizeService;
 import com.ns.cloud.service.consumer.RedisClientService;
+import com.ns.cloud.utils.GenerateToken;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -28,6 +32,9 @@ public class PrizeServiceImpl implements PrizeService {
     RecordMapper recordMapper;
 
     @Autowired
+    GenerateToken generateToken;
+
+    @Autowired
     RedisClientService redisClientService;
 
 
@@ -35,10 +42,10 @@ public class PrizeServiceImpl implements PrizeService {
     @Transactional
     public Result lottery(String userId, Long prizeId) {
         if(StringUtils.isEmpty(userId)){
-            return new Result(200,"用户id不能为空");
+            return new Result(CodeConstants.CODE_SUCCESS,"用户id不能为空");
         }
         if(prizeId == null){
-            return new Result(500,"prizeId不能为空");
+            return new Result(CodeConstants.CODE_FAIL,"prizeId不能为空");
         }
 
         Prize prize = prizeMapper.findByPrizeId(prizeId);
@@ -60,6 +67,12 @@ public class PrizeServiceImpl implements PrizeService {
         record.setUserId(userId).setPrizeId(prizeId).setState(1).setCreateTime(LocalDateTime.now());
         recordMapper.insert(record);
 
-        return new Result(200,"恭喜你,中了哦!");
+        return new Result(CodeConstants.CODE_SUCCESS,"恭喜你,中了哦!");
     }
+
+    @Override
+    public Result addLotteryToken(Long prizeId, Long tokenNumber) {
+        return null;
+    }
+
 }

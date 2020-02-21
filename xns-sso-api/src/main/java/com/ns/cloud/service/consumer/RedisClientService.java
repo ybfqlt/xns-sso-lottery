@@ -2,8 +2,12 @@ package com.ns.cloud.service.consumer;
 
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.Mapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.data.redis.core.RedisTemplate;
+
+import java.util.List;
 
 /**
  * @Author: xns
@@ -23,4 +27,10 @@ public interface RedisClientService {
 
     @PostMapping("/redis/setnx")
     public Boolean setnx(@RequestParam String key, @RequestParam String value, @RequestParam Long timeout);
+
+    @PostMapping("/redis/setlist")
+    public Boolean setList(@RequestParam String key, @RequestParam List<String> list);
+
+    @PostMapping("/redis/retmp")
+    public  RedisTemplate getRetmp();
 }

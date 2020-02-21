@@ -2,10 +2,13 @@ package com.ns.redis.controller;
 
 import com.ns.redis.service.RedisService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 /**
  * @Author: xns
@@ -44,5 +47,16 @@ public class RedisController {
     @PostMapping("/setnx")
     public Boolean setnx(String key, String value, Long timeout){
         return redisService.setNx(key,value,timeout);
+    }
+
+    @PostMapping("/setlist")
+    public Boolean setList(String key, List<String> list){
+        redisService.putList(key,list);
+        return true;
+    }
+
+    @GetMapping("/retmp")
+    public RedisTemplate getRetmp(){
+        return redisService.getRedisTemplate();
     }
 }
