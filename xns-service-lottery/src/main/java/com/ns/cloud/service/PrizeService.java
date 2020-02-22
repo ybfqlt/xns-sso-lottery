@@ -10,5 +10,6 @@ public interface PrizeService {
 
     public Result lottery(String userId,Long prizeId);
 
-    public Result addLotteryToken(Long prizeId,Long tokenNumber);
+    public Result addLotteryToken(Long prizeId,Integer tokenNumber);
+
 }

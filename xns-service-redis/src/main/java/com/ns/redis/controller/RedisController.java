@@ -3,10 +3,8 @@ package com.ns.redis.controller;
 import com.ns.redis.service.RedisService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -49,14 +47,21 @@ public class RedisController {
         return redisService.setNx(key,value,timeout);
     }
 
+    /**
+     * 不加@RequestParam会报错
+     * @param key
+     * @param list
+     * @return
+     */
     @PostMapping("/setlist")
-    public Boolean setList(String key, List<String> list){
+    public Boolean setList(@RequestParam("key") String key, @RequestParam(value="list",required = true) List<String> list){
         redisService.putList(key,list);
         return true;
     }
 
-    @GetMapping("/retmp")
-    public RedisTemplate getRetmp(){
-        return redisService.getRedisTemplate();
+    @PostMapping("/getone")
+    public String getListOfOne(@RequestParam("key") String key){
+        String oneOfList = redisService.getOneOfList(key);
+        return oneOfList;
     }
 }

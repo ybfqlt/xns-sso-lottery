@@ -2,13 +2,17 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.ns.cloud.mapper.RecordMapper" >
 
-    <resultMap id="BaseResultMap" type="com.ns.cloud.entities.Record">
+    <resultMap id="BaseResultMap" type="com.ns.cloud.entities.LotteryRecord">
         <result property="prizeId" column="prize_id"></result>
         <result property="userId" column="user_id"></result>
         <result property="state" column="state"></result>
         <result property="createTime" column="create_time"></result>
     </resultMap>
     <insert id="insert">
-        insert into lottery_record values (#{record.prizeId},#{record.userId} , #{record.state} ,NOW())
+        insert into lottery_record values (#{lotteryRecord.prizeId},#{lotteryRecord.userId} , #{lotteryRecord.state}
+        ,NOW())
     </insert>
+    <select id="selectByUserIdAndPrizeId" resultMap="BaseResultMap">
+        select * from lottery_record where user_id = #{userId,jdbcType=VARCHAR} and prize_id = #{prizeId,jdbcType=BIGINT}
+    </select>
 </mapper>

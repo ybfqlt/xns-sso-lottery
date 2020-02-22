@@ -32,6 +32,6 @@ public interface RedisService {
      */
     public void putList(String key, List<String> list);
 
-    public RedisTemplate getRedisTemplate();
 
+    public String getOneOfList(String key);
 }

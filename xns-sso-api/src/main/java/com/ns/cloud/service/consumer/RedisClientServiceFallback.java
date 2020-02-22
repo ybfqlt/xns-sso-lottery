@@ -43,7 +43,7 @@ public class RedisClientServiceFallback implements FallbackFactory<RedisClientSe
             }
 
             @Override
-            public RedisTemplate getRetmp() {
+            public String getListOfOne(String key) {
                 return null;
             }
         };

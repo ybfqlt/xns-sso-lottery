@@ -28,22 +28,22 @@ public class GenerateToken {
         return token;
     }
 
-    public void createListToken(String keyPrefix,String redisKey,Long tokeNumber){
+    public void createListToken(String keyPrefix,String redisKey,Integer tokeNumber){
         List<String> tokenList = getListToken(keyPrefix,tokeNumber);
         redisClientService.setList(redisKey,tokenList);
     }
 
-    public List<String> getListToken(String keyPrefix,Long tokeNumber){
+    public List<String> getListToken(String keyPrefix,Integer tokeNumber){
         List<String> tokenList = new ArrayList<>();
         for(int i=0;i<tokeNumber;i++){
-            String token = keyPrefix+UUID.randomUUID().toString().replace("-","");
+            String token = keyPrefix+UUID.randomUUID().toString();
             tokenList.add(token);
         }
         return tokenList;
     }
 
     public String getListOfOneByToken(String key){
-        String value = (String)redisClientService.getRetmp().opsForList().leftPop(key);
+        String value = redisClientService.getListOfOne(key);
         return value;
     }
 }

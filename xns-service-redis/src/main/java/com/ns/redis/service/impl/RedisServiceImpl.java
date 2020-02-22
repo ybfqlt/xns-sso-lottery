@@ -55,9 +55,10 @@ public class RedisServiceImpl implements RedisService {
         Long aLong = redisTemplate.opsForList().rightPushAll(key, list);
     }
 
+
     @Override
-    public RedisTemplate getRedisTemplate() {
-        return redisTemplate;
+    public String getOneOfList(String key) {
+        return String.valueOf(redisTemplate.opsForList().leftPop(key));
     }
 
 }

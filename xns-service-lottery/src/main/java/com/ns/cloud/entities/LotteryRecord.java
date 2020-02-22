@@ -15,7 +15,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Accessors(chain=true)
-public class Record {
+public class LotteryRecord {
     private Long prizeId;
 
     private String userId;

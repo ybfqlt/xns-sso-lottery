@@ -25,6 +25,19 @@ spring:
       filters: stat,wall
       use-global-data-source-stat: true
 
+  rabbitmq:
+    #不能为localhost,否则报错
+    host: 127.0.0.1
+    #15672是Web管理界面的端口；5672是访问的端口
+    port: 5672
+    username: xns
+    password: xns2189543
+    #这个虚拟的东西一定要授权
+    virtual-host: /xns_lottery
+    #开启消息确认
+    publisher-confirms: true
+
+
 eureka:
   client:
     service-url:

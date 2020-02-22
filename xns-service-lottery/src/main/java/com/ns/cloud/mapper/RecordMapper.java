@@ -1,7 +1,6 @@
 package com.ns.cloud.mapper;
 
-import com.ns.cloud.entities.Record;
-import org.apache.ibatis.annotations.Insert;
+import com.ns.cloud.entities.LotteryRecord;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -12,5 +11,7 @@ import org.apache.ibatis.annotations.Param;
 @Mapper
 public interface RecordMapper {
 
-    public int insert(@Param("record") Record record);
+    public int insert(@Param("lotteryRecord") LotteryRecord lotteryRecord);
+
+    LotteryRecord selectByUserIdAndPrizeId(@Param("userId") String userId, @Param("prizeId")Long prizeId);
 }
