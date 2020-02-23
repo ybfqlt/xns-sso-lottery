@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>抽奖</title>
@@ -68,12 +68,12 @@
             margin-right: 40px;
         }
     </style>
-    <script src="/js/jquery-3.3.1.min.js"></script>
+    <script src="/static/js/jquery-3.3.1.min.js"></script>
 </head>
 <body>
     <nav>
-        <span>xns</span>
-        <span>xns</span>
+        <span onclick="exit()">注销</span>
+        <span><label th:text="${session.name}"></label></span>
     </nav>
     <div id="title">抽奖中心</div>
     <div id="container">
@@ -90,8 +90,8 @@
         $(function () {
             //请求当前奖品
             $.ajax({
-                url:'/getGift',
-                type:'post',
+                url:'http://localhost:8002/getres',
+                type:'get',
                 success:function (data){
                     $('#gift').text(data.prizeName);
                 }
@@ -99,22 +99,57 @@
         });
         let time = 0;
 
-        //不断请求 抽奖情况
+        //请求 抽奖
         function ajax() {
             $.ajax({
-                url:'/lucky',
+                url:'http://localhost:8002/lottery',
+                data: {
+                    userId: null,
+                    prizeId: null
+                },
                 type:'post',
                 success:function (data){
                     clearInterval(time);
                     $('#gift').text(data.mes);
-                    //禁止按钮
-                    document.getElementById("btn1").disabled=true;
-                    document.getElementById("btn1").innerText = '等待开奖'
+                    //禁止按钮btn1
+                    document.getElementById("btn").disabled=true;
+                    document.getElementById("btn").innerText = '等待开奖'
                 }
             });
         }
+
+        //不断获取结果
+        function res() {
+            $.ajax({
+                url:'http://localhost:8002/getres',
+                data: {
+                    userId: null,
+                    prizeId: null
+                },
+                type:'post',
+                success:function (data){
+                    clearInterval(time);
+                    $('#gift').text(data.mes);
+                    //禁止按钮btn1
+                    document.getElementById("btn").disabled=true;
+                    document.getElementById("btn").innerText = '等待开奖'
+                }
+            });
+        }
+
         function luckyDraw() {
-          time = setInterval(ajax,1000);
+          time = setInterval(res,1000);
+        }
+
+        function exit() {
+            $.ajax({
+                url: 'http://localhost:8002/logout',
+                type: 'GET',
+                dataType: "json",
+                success: function () {
+                    alert('退出成功');
+                }
+            });
         }
     </script>
 </body>

@@ -63,26 +63,6 @@ public class PrizeServiceImpl implements PrizeService {
         sendLotteryMes(userId,prizeId);
         return new Result(CodeConstants.CODE_SUCCESS,"开奖中....");
 
-//        Prize prize = prizeMapper.findByPrizeId(prizeId);
-//
-//        Boolean setnx = redisClientService.setnx(userId,prizeId+"",60L);
-//        if(setnx==null){
-//            return new Result().no("网络问题，请稍后再试");
-//        }
-//        if(!setnx){
-//            return new Result().no("访问次数太频繁,请在60秒后再试");
-//        }
-//
-//        int judge = prizeMapper.updatePrizeStorage(prizeId,prize.getVersion());
-//        if(judge<=0){
-//            return new Result().no("未中奖");
-//        }
-//
-//        Record record = new Record();
-//        record.setUserId(userId).setPrizeId(prizeId).setState(1).setCreateTime(LocalDateTime.now());
-//        recordMapper.insert(record);
-//
-//        return new Result(CodeConstants.CODE_SUCCESS,"恭喜你,中了哦!");
     }
 
     //获取抽奖token之后，异步放入mq中实现礼品库存修改
