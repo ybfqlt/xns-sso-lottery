@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>抽奖</title>
+    <style type="text/css">
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        html,body{
+            width: 100%;
+            height: 100%;
+            background-color: beige;
+        }
+        #title{
+            width: 100%;
+            text-align: center;
+            margin: 30px auto 20px;
+            font-size: 23px;
+        }
+        #container{
+            width:35%;
+            border: 1px solid #cccccc;
+            margin: 20px auto;
+            border-radius: 10px;
+            background-color: #e68351;
+            text-align: center;
+        }
+        #content{
+            width: 80%;
+            height: 200px;
+            border-radius: 10px;
+            color: white;
+            font-size: 21px;
+            font-weight: bolder;
+            margin: 50px auto;
+            padding-top: 30px;
+            box-sizing: border-box;
+            background-color: #f99947;
+        }
+        #btn{
+            width:90px;
+            height:90px;
+            border-radius: 50%;
+            margin: 15px auto;
+            text-align: center;
+            color: #f0f2f5;
+            font-size: 20px;
+            background-color: #ff3e31;
+            outline: none;
+        }
+        nav{
+            width: 100%;
+            height: 50px;
+            line-height: 50px;
+            border-bottom: 1px solid #cccccc;
+            font-size: 18px;
+            background: linear-gradient(to right, #f9b861 0%, #f7e696 100%)
+        }
+        nav span:nth-child(1){
+            margin-left: 40px;
+            font-weight: bolder;
+            font-size: 22px;
+        }
+        nav span:nth-child(2){
+            float: right;
+            margin-right: 40px;
+        }
+    </style>
+    <script src="/js/jquery-3.3.1.min.js"></script>
+</head>
+<body>
+    <nav>
+        <span>xns</span>
+        <span>xns</span>
+    </nav>
+    <div id="title">抽奖中心</div>
+    <div id="container">
+        <div id="content">
+            <div>奖品等着你哦!</div><br>
+            <div id="gift">冰箱一台</div>
+        </div>
+        <hr>
+        <button id="btn" onclick="luckyDraw()">抽奖</button>
+    </div>
+
+    <script>
+
+        $(function () {
+            //请求当前奖品
+            $.ajax({
+                url:'/getGift',
+                type:'post',
+                success:function (data){
+                    $('#gift').text(data.prizeName);
+                }
+            });
+        });
+        let time = 0;
+
+        //不断请求 抽奖情况
+        function ajax() {
+            $.ajax({
+                url:'/lucky',
+                type:'post',
+                success:function (data){
+                    clearInterval(time);
+                    $('#gift').text(data.mes);
+                    //禁止按钮
+                    document.getElementById("btn1").disabled=true;
+                    document.getElementById("btn1").innerText = '等待开奖'
+                }
+            });
+        }
+        function luckyDraw() {
+          time = setInterval(ajax,1000);
+        }
+    </script>
+</body>
+</html>

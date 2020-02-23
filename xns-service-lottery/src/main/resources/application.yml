@@ -34,7 +34,7 @@ spring:
     password: xns2189543
     #这个虚拟的东西一定要授权
     virtual-host: /xns_lottery
-    #开启消息确认
+    #开启消息确认机制
     publisher-confirms: true
 
 

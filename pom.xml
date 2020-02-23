@@ -18,9 +18,9 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.ns</groupId>
-    <artifactId>xns-sso</artifactId>
+    <artifactId>xns-sso-lottery</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>xns-sso</name>
+    <name>xns-sso-lottery</name>
     <description>Demo project for Spring Boot</description>
 
     <properties>
