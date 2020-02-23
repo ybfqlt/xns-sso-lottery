@@ -1,5 +1,6 @@
 package com.ns.cloud.controller;
 
+import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 import com.ns.cloud.dto.Result;
 import com.ns.cloud.entities.Prize;
 import com.ns.cloud.service.PrizeService;
@@ -30,6 +31,7 @@ public class LotteryContoller {
     }
 
     @GetMapping("/lottery")
+    @HystrixCommand(fallbackMethod = "processBack_Get")
     public Result Lottery(@RequestParam("userId") String userId,@RequestParam("prizeId") Long prizeId){
         Result lottery = prizeService.lottery(userId, prizeId);
         return lottery;
@@ -39,6 +41,10 @@ public class LotteryContoller {
     public Result getResult(@RequestParam("userId") String userId,@RequestParam("prizeId") Long prizeId){
         Result lotteryResult = recordService.getLotteryResult(userId, prizeId);
         return  lotteryResult;
+    }
+
+    public Result processBack_Get(@RequestParam("userId") String userId,@RequestParam("prizeId") Long prizeId){
+        return new Result().no("服务器繁忙，请稍后再试");
     }
 
 }

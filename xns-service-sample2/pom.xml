@@ -9,7 +9,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>xns-server-sample2</artifactId>
+    <artifactId>xns-service-sample2</artifactId>
     <dependencies>
         <dependency>
             <groupId>com.ns</groupId>
@@ -67,6 +67,6 @@
                 <filtering>true</filtering>
             </resource>
         </resources>
-        <finalName>xns-sso-sample2</finalName>
+        <finalName>xns-service-sample2</finalName>
     </build>
 </project>

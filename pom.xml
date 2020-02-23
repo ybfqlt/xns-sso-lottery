@@ -9,7 +9,7 @@
         <module>xns-service-redis</module>
         <module>xns-service-eureka</module>
         <module>xns-service-lottery</module>
-        <module>xns-server-sample2</module>
+        <module>xns-service-sample2</module>
         <module>xns-zuul-gateway</module>
     </modules>
     <parent>

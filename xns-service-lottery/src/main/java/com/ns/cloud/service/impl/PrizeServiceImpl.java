@@ -1,6 +1,7 @@
 package com.ns.cloud.service.impl;
 
 import com.alibaba.fastjson.JSONObject;
+import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 import com.ns.cloud.constants.CodeConstants;
 import com.ns.cloud.constants.LotteryConstants;
 import com.ns.cloud.dto.Result;
@@ -58,7 +59,7 @@ public class PrizeServiceImpl implements PrizeService {
         String lotteryToken = generateToken.getListOfOneByToken(prizeId+"");
         if(StringUtils.isEmpty(lotteryToken)){
             log.info("礼物"+prizeId+"已经抽完，请下次抓紧哦");
-            return new Result(CodeConstants.CODE_SUCCESS,"对不起，奖品已被抽完，下次抓紧时机哦");
+            return new Result(CodeConstants.CODE_WITHOUT,"对不起，奖品已被抽完，下次抓紧时机哦");
         }
 
         //异步放入mq修改stock

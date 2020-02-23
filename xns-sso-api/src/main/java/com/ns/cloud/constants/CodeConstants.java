@@ -10,4 +10,6 @@ public class CodeConstants {
     public final static Integer CODE_SUCCESS=200;
 
     public final static Integer CODE_FAIL=500;
+
+    public final static Integer CODE_WITHOUT=202;
 }

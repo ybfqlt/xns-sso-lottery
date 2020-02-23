@@ -28,6 +28,11 @@ public class WebController {
         return "index";
     }
 
+    @GetMapping("/")
+    public String lottery(){
+        return "lottery";
+    }
+
 
     @ResponseBody
     @GetMapping("/logout")

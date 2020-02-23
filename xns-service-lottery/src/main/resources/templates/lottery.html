@@ -4,30 +4,34 @@
     <meta charset="UTF-8">
     <title>抽奖</title>
     <style type="text/css">
-        *{
+        * {
             margin: 0;
             padding: 0;
         }
-        html,body{
+
+        html, body {
             width: 100%;
             height: 100%;
             background-color: beige;
         }
-        #title{
+
+        #title {
             width: 100%;
             text-align: center;
             margin: 30px auto 20px;
             font-size: 23px;
         }
-        #container{
-            width:35%;
+
+        #container {
+            width: 35%;
             border: 1px solid #cccccc;
             margin: 20px auto;
             border-radius: 10px;
             background-color: #e68351;
             text-align: center;
         }
-        #content{
+
+        #content {
             width: 80%;
             height: 200px;
             border-radius: 10px;
@@ -39,9 +43,10 @@
             box-sizing: border-box;
             background-color: #f99947;
         }
-        #btn{
-            width:90px;
-            height:90px;
+
+        #btn {
+            width: 90px;
+            height: 90px;
             border-radius: 50%;
             margin: 15px auto;
             text-align: center;
@@ -50,7 +55,8 @@
             background-color: #ff3e31;
             outline: none;
         }
-        nav{
+
+        nav {
             width: 100%;
             height: 50px;
             line-height: 50px;
@@ -58,104 +64,105 @@
             font-size: 18px;
             background: linear-gradient(to right, #f9b861 0%, #f7e696 100%)
         }
-        nav span:nth-child(1){
+
+        nav span:nth-child(1) {
             margin-left: 40px;
             font-weight: bolder;
             font-size: 22px;
         }
-        nav span:nth-child(2){
+
+        nav span:nth-child(2) {
             float: right;
+            font-weight: bolder;
             margin-right: 40px;
         }
     </style>
-    <script src="/static/js/jquery-3.3.1.min.js"></script>
+    <script src="../static/js/jquery-3.3.1.min.js"></script>
 </head>
 <body>
-    <nav>
-        <span onclick="exit()">注销</span>
-        <span><label th:text="${session.name}"></label></span>
-    </nav>
-    <div id="title">抽奖中心</div>
-    <div id="container">
-        <div id="content">
-            <div>奖品等着你哦!</div><br>
-            <div id="gift">冰箱一台</div>
-        </div>
-        <hr>
-        <button id="btn" onclick="luckyDraw()">抽奖</button>
+<nav>
+    <span onclick="exit()">注销</span>
+    <span th:text="${session.name}"></span>
+</nav>
+<div id="title">抽奖中心</div>
+<div id="container">
+    <div id="content">
+        <div>奖品等着你哦!</div>
+        <br>
+        <div id="gift">冰箱一台</div>
     </div>
+    <hr>
+    <button id="btn" onclick="ajax()">抽奖</button>
+</div>
 
-    <script>
-
-        var userId;
-        var prizeId;
-
-        $(function () {
-            //请求当前奖品
-            $.ajax({
-                url:'http://localhost:8002/prize',
-                type:'get',
-                success:function (data){
-                    $('#gift').text(data.prizeName);
-                    prizeId = data.prizeId;
-                    userId = data.mes;
-                }
-            });
+<script>
+    $(function () {
+        //请求当前奖品
+        $.ajax({
+            url: 'http://localhost:8002/prize',
+            type: 'get',
+            success: function (data) {
+                $('#gift').text(data.data.prizeName);
+                localStorage['userId'] = JSON.stringify(data.mes);
+                localStorage['prizeId'] = JSON.stringify(data.data.prizeId);
+            }
         });
-        let time = 0;
+    });
+    let time = 0;
 
-        //请求 抽奖
-        function ajax() {
-            $.ajax({
-                url:'http://localhost:8002/lottery',
-                data: {
-                    userId: userId,
-                    prizeId: prizeId
-                },
-                type:'post',
-                success:function (data){
-                    clearInterval(time);
-                    $('#gift').text(data.mes);
-                    //禁止按钮btn1
-                    document.getElementById("btn").disabled=true;
-                    document.getElementById("btn").innerText = '等待开奖'
+    //请求 抽奖
+    function ajax() {
+        var userId = localStorage.getItem("userId");
+        var prizeId = localStorage.getItem("prizeId");
+        var url1 = "http://localhost:8002/lottery?userId=" + userId + "&prizeId=" + prizeId;
+        $.ajax({
+            url:url1,
+            type: 'get',
+            success: function (data) {
+                if (data.code == 200) {
+                    luckyDraw();
                 }
-            });
-        }
+                $('#gift').text(data.mes);
+                //禁止按钮btn1
+                document.getElementById("btn").disabled = true;
+                document.getElementById("btn").innerText = '开奖ing'
+            }
+        });
+    }
 
-        //不断获取结果
-        function res() {
-            $.ajax({
-                url:'http://localhost:8002/getres',
-                data: {
-                    userId: userId,
-                    prizeId: prizeId
-                },
-                type:'post',
-                success:function (data){
-                    clearInterval(time);
-                    $('#gift').text(data.mes);
-                    //禁止按钮btn1
-                    document.getElementById("btn").disabled=true;
-                    document.getElementById("btn").innerText = '等待开奖'
-                }
-            });
-        }
 
-        function luckyDraw() {
-          time = setInterval(res,1000);
-        }
+    //不断获取结果
+    function res() {
+        var userId = localStorage.getItem("userId");
+        var prizeId = localStorage.getItem("prizeId");
+        var url2 = "http://localhost:8002/getres?userId=" + userId + "&prizeId=" + prizeId;
+        $.ajax({
+            url:url2,
+            type: 'get',
+            success: function (data) {
+                clearInterval(time);
+                $('#gift').text(data.mes);
+                //禁止按钮btn1
+                document.getElementById("btn").disabled = true;
+                document.getElementById("btn").innerText = '已开'
+            }
+        });
+    }
 
-        function exit() {
-            $.ajax({
-                url: 'http://localhost:8002/logout',
-                type: 'GET',
-                dataType: "json",
-                success: function () {
-                    alert('退出成功');
-                }
-            });
-        }
-    </script>
+    function luckyDraw() {
+        time = setInterval(res, 1000);
+    }
+
+    function exit() {
+        $.ajax({
+            url: 'http://localhost:8002/logout',
+            type: 'GET',
+            dataType: "json",
+            success: function () {
+                alert('退出成功');
+            }
+        });
+    }
+</script>
 </body>
 </html>
