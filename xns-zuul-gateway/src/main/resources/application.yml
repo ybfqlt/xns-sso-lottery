@@ -1,0 +1,23 @@
+server:
+  port: 9527
+
+spring:
+  application:
+    name: xns-zuul-gateway
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:7001/eureka/
+  instance:
+    instance-id: gateway-9527.com
+
+
+
+
+
+info:
+  app.name: xns-sso
+  company.name: www.xns.com
+  build.artifactId: $project.artifactId$
+  build.version: $project.version$
