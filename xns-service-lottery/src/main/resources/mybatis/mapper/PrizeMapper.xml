@@ -17,6 +17,8 @@
     <select id="findByPrizeId" resultMap="BaseResultMap">
         select * from prize where prize_id = #{prizeId}
     </select>
-
+    <select id="selectByNow" resultMap="BaseResultMap">
+        select * from prize where #{now,jdbcType=TIMESTAMP} >= create_time and end_time >= #{now,jdbcType=TIMESTAMP}
+    </select>
 
 </mapper>

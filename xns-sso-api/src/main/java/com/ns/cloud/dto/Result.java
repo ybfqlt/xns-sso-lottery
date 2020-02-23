@@ -1,5 +1,6 @@
 package com.ns.cloud.dto;
 
+import com.ns.cloud.constants.CodeConstants;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
@@ -39,4 +40,7 @@ public class Result<T> implements Serializable {
         return new Result<T>().setCode(500).setData(null).setMes(mes);
     }
 
+    public Result<T> success(T data,String mes){
+        return new Result<T>().setData(data).setCode(CodeConstants.CODE_SUCCESS).setMes(mes);
+    }
 }

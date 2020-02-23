@@ -4,6 +4,8 @@ import com.ns.cloud.entities.Prize;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
+import java.time.LocalDateTime;
+
 /**
  * @Author: xns
  * @Date: 20-2-20 下午10:27
@@ -15,4 +17,7 @@ public interface PrizeMapper {
 
 
     Prize findByPrizeId(@Param("prizeId") Long prizeId);
+
+
+    Prize selectByNow(LocalDateTime now);
 }

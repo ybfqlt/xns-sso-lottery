@@ -87,13 +87,18 @@
 
     <script>
 
+        var userId;
+        var prizeId;
+
         $(function () {
             //请求当前奖品
             $.ajax({
-                url:'http://localhost:8002/getres',
+                url:'http://localhost:8002/prize',
                 type:'get',
                 success:function (data){
                     $('#gift').text(data.prizeName);
+                    prizeId = data.prizeId;
+                    userId = data.mes;
                 }
             });
         });
@@ -104,8 +109,8 @@
             $.ajax({
                 url:'http://localhost:8002/lottery',
                 data: {
-                    userId: null,
-                    prizeId: null
+                    userId: userId,
+                    prizeId: prizeId
                 },
                 type:'post',
                 success:function (data){
@@ -123,8 +128,8 @@
             $.ajax({
                 url:'http://localhost:8002/getres',
                 data: {
-                    userId: null,
-                    prizeId: null
+                    userId: userId,
+                    prizeId: prizeId
                 },
                 type:'post',
                 success:function (data){

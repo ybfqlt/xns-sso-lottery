@@ -1,6 +1,7 @@
 package com.ns.cloud.service;
 
 import com.ns.cloud.dto.Result;
+import com.ns.cloud.entities.Prize;
 
 /**
  * @Author: xns
@@ -8,8 +9,10 @@ import com.ns.cloud.dto.Result;
  */
 public interface PrizeService {
 
-    public Result lottery(String userId,Long prizeId);
+    public Result lottery(String userId, Long prizeId);
 
-    public Result addLotteryToken(Long prizeId,Integer tokenNumber);
+    public Result addLotteryToken(Long prizeId, Integer tokenNumber);
+
+    public Prize getPrize();
 
 }

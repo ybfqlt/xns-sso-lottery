@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.ns.cloud.constants.CodeConstants;
 import com.ns.cloud.constants.LotteryConstants;
 import com.ns.cloud.dto.Result;
+import com.ns.cloud.entities.Prize;
 import com.ns.cloud.mapper.PrizeMapper;
 import com.ns.cloud.mapper.RecordMapper;
 import com.ns.cloud.producer.LotteryStockProducer;
@@ -18,6 +19,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+
 
 /**
  * @Author: xns
@@ -85,6 +87,16 @@ public class PrizeServiceImpl implements PrizeService {
         }
         generateLotteryToken(prizeId,tokenNumber);
         return new Result(CodeConstants.CODE_SUCCESS,"令牌准备完毕");
+    }
+
+    /**
+     * 获取当前时间段正在抽奖奖品
+     * @return
+     */
+    @Override
+    public Prize getPrize() {
+        Prize prize = prizeMapper.selectByNow(LocalDateTime.now());
+        return prize;
     }
 
 

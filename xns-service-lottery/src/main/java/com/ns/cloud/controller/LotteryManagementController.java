@@ -22,4 +22,5 @@ public class LotteryManagementController {
         Result result = prizeService.addLotteryToken(prizeId, tokenNumber);
         return result;
     }
+
 }
