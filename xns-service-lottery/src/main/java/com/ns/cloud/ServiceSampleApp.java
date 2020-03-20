@@ -6,6 +6,7 @@ import org.springframework.cloud.client.circuitbreaker.EnableCircuitBreaker;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 import org.springframework.cloud.openfeign.EnableFeignClients;
+import org.springframework.scheduling.annotation.EnableAsync;
 
 /**
  * @Author: xns
@@ -13,6 +14,7 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
  */
 @EnableEurekaClient //服务提供者
 @EnableDiscoveryClient //服务消费者
+@EnableAsync
 @EnableCircuitBreaker //对hystrix熔断机制的支持
 @EnableFeignClients(basePackages = {"com.ns.cloud"})
 @SpringBootApplication(scanBasePackages = "com.ns.cloud")

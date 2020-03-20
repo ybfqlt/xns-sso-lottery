@@ -1,6 +1,7 @@
 package com.ns.cloud.service.impl;
 
 import com.ns.cloud.constants.StatusConstants;
+import com.ns.cloud.constants.TimeConstants;
 import com.ns.cloud.entities.User;
 import com.ns.cloud.mapper.UserMapper;
 import com.ns.cloud.service.LoginService;
@@ -56,7 +57,7 @@ public class LonginServiceImpl implements LoginService {
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-                redisClientService.put(user.getUserName(), json1, 60 * 60);
+                redisClientService.put(user.getUserName(), json1, TimeConstants.TIME_LONG_EXPIRE);
                 return user1;
             } else {
                 return null;

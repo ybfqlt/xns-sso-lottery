@@ -43,7 +43,6 @@ public class GenerateToken {
     }
 
     public String getListOfOneByToken(String key){
-        String value = redisClientService.getListOfOne(key);
-        return value;
+        return redisClientService.getListOfOne(key);
     }
 }

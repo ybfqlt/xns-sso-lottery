@@ -34,13 +34,16 @@ public class LotteryStockConsumer {
     @Autowired
     private RecordMapper recordMapper;
 
+    //Queue：队列，PTP模式下，特定生产者向特定queue发送消息，消费者订阅特定的queue完成指定消息的接收
+    //
+    //   Message：消息体，根据不同通信协议定义的固定格式进行编码的数据包，来封装业务数据，实现消息的传输
     @RabbitListener(queues = RabbitmqConfig.MODIFY_STOCK_QUEUE)
     @RabbitHandler
     @Transactional
     public void process(Message message, @Headers Map<String, Object> headers, Channel channel) throws IOException {
         String msgId = message.getMessageProperties().getMessageId();
         String msg = new String(message.getBody(), "UTF-8");
-        log.info(">>messageId:{},msg:{}", message, msg);
+        log.info(">>msg:{},msg:{}", message, msg);
         JSONObject jsonObject = JSONObject.parseObject(msg);
         //获取奖品id
         Long prizeId = jsonObject.getLong("prizeId");

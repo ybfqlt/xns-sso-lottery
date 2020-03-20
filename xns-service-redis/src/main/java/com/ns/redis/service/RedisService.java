@@ -34,4 +34,6 @@ public interface RedisService {
 
 
     public String getOneOfList(String key);
+
+    public RedisTemplate getRedisTemplate();
 }

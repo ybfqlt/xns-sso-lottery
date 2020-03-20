@@ -46,6 +46,11 @@ public class RedisClientServiceFallback implements FallbackFactory<RedisClientSe
             public String getListOfOne(String key) {
                 return null;
             }
+
+            @Override
+            public RedisTemplate getRedisTemplate() {
+                return null;
+            }
         };
     }
 }

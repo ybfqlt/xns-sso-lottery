@@ -1,6 +1,7 @@
 package com.ns.cloud.service.consumer;
 
 import org.springframework.cloud.openfeign.FeignClient;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -31,4 +32,7 @@ public interface RedisClientService {
 
     @PostMapping("/redis/getone")
     public String getListOfOne(@RequestParam("key") String key);
+
+    @GetMapping
+    public RedisTemplate getRedisTemplate();
 }

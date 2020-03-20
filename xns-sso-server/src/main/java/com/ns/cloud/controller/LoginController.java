@@ -1,6 +1,7 @@
 package com.ns.cloud.controller;
 
 
+import com.ns.cloud.constants.TimeConstants;
 import org.apache.commons.lang.StringUtils;
 import com.ns.cloud.constants.CodeConstants;
 import com.ns.cloud.constants.StatusConstants;
@@ -105,9 +106,9 @@ public class LoginController {
             return new Result(CodeConstants.CODE_FAIL, "密码错误/不存在此用户,请重新输入");
         } else {
             String token = UUID.randomUUID().toString();
-            String json = redisClientService.put(token, login.getUserName(), 60 * 60);
+            String json = redisClientService.put(token, login.getUserName(), TimeConstants.TIME_LONG_EXPIRE);
             if (StatusConstants.STATUS_YES.equals(json)) {
-                CookieUtils.setCookie(httpServletRequest, httpServletResponse, "token", token, 60 * 60);
+                CookieUtils.setCookie(httpServletRequest, httpServletResponse, "token", token, TimeConstants.TIME_INT_EXPIRE);
                 if (StringUtils.isNotBlank(url)) {
                     return new Result<String>(CodeConstants.CODE_REDIRECT, "登陆成功", url);
                 }

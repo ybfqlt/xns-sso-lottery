@@ -2,9 +2,12 @@ package com.ns.redis.service.impl;
 
 import com.ns.redis.service.RedisService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
+import org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
+import java.io.Serializable;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -18,6 +21,8 @@ public class RedisServiceImpl implements RedisService {
 
     @Autowired
     private RedisTemplate redisTemplate;
+
+
 
     @Override
     public void put(String key, Object value, long seconds) {
@@ -61,4 +66,9 @@ public class RedisServiceImpl implements RedisService {
         return String.valueOf(redisTemplate.opsForList().leftPop(key));
     }
 
+
+    @Override
+    public RedisTemplate getRedisTemplate(){
+        return redisTemplate;
+    }
 }

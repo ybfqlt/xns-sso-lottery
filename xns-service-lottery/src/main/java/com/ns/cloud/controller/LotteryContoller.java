@@ -1,6 +1,7 @@
 package com.ns.cloud.controller;
 
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
+import com.netflix.hystrix.contrib.javanica.annotation.HystrixProperty;
 import com.ns.cloud.dto.Result;
 import com.ns.cloud.entities.Prize;
 import com.ns.cloud.service.PrizeService;
@@ -31,7 +32,12 @@ public class LotteryContoller {
     }
 
     @GetMapping("/lottery")
-    @HystrixCommand(fallbackMethod = "processBack_Get")
+    @HystrixCommand(fallbackMethod = "processBack_Get", commandKey = "lottery1",threadPoolProperties = {
+            @HystrixProperty(name="fallback.isolation.semaphore.maxConcurrentRequests",value = "1000"),
+            @HystrixProperty(name = "coreSize",value = "500"),
+            @HystrixProperty(name="maxQueueSize",value = "500"),
+            @HystrixProperty(name="queueSizeRejectionThreshold",value = "30")
+    })
     public Result Lottery(@RequestParam("userId") String userId,@RequestParam("prizeId") Long prizeId){
         Result lottery = prizeService.lottery(userId, prizeId);
         return lottery;

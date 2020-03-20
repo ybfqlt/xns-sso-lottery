@@ -36,6 +36,7 @@ public class RabbitmqConfig {
         return new DirectExchange(MODIFY_EXCHANGE_NAME);
     }
 
+    //rabbitMq 中的broker由exchange、binder queue三部分组成，其中exchange和binding组成了消息的路由键；客户端Producer通过连接channel和server进行通信，Consumer从queue获取消息进行消费，rabbit有消息确认机制
     //修改库存队列绑定交换机
     @Bean
     Binding bindingExchangeinteralDicQueue(){
